@@ -3,9 +3,9 @@ import 'package:test/test.dart';
 
 const PUBK = "FLWPUBK-e634d14d9ded04eaf05d5b63a0a06d2f-X";
 const SECK = "FLWSECK-bb971402072265fb156e90a3578fe5e6-X";
-const RAW_DATA = <String, int>{"a": 1, "b": 2};
+const RAW_DATA = <String, int>{"a": 1, "b": 2, "c": 3};
 const ENCRYPTED_DATA = 'tGXfuhcyL46cVsynJ79v+w==';
-const GENERATED_KEY = 'bb9714020722a�ށk���L��i�';
+const GENERATED_KEY = 'bb9714020722eb4cf7a169f2';
 
 const encryption = const Encryption(secretKey: SECK);
 
