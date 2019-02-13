@@ -1,0 +1,6 @@
+language: dart
+script:
+  - pub run test
+cache:
+  directories:
+    - $HOME/.pub-cache
