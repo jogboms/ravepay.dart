@@ -10,7 +10,7 @@ class Charge {
   Charge({
     @required this.payload,
   })  : assert(payload != null),
-        _httpClient = HttpWrapper(),
+        _http = HttpWrapper(),
         _encryption = Encryption(secretKey: Rave().secretKey);
 
   factory Charge.basic({
@@ -25,17 +25,16 @@ class Charge {
     String meta,
   }) {
     return Charge(
-      payload: ChargePayload(
-        currency: currency,
-        country: country,
-        txRef: txRef,
-        amount: amount,
-        paymentType: paymentType,
-        email: email,
-        firstname: firstname,
-        lastname: lastname,
-        meta: meta,
-      ),
+      payload: Payload()
+        ..add(Keys.Currency, currency)
+        ..add(Keys.Country, country)
+        ..add(Keys.TxRef, txRef)
+        ..add(Keys.Amount, amount)
+        ..add(Keys.PaymentType, paymentType)
+        ..add(Keys.Email, email)
+        ..add(Keys.Firstname, firstname)
+        ..add(Keys.Lastname, lastname)
+        ..add(Keys.Meta, meta),
     );
   }
 
@@ -51,27 +50,26 @@ class Charge {
     String meta,
   }) {
     return Charge(
-      payload: ChargePayload(
-        currency: currency,
-        country: country,
-        txRef: txRef,
-        amount: amount,
-        paymentType: paymentType,
-        email: email,
-        firstname: firstname,
-        lastname: lastname,
-        meta: meta,
-        suggestedAuth: "PIN",
-      ),
+      payload: Payload()
+        ..add(Keys.Currency, currency)
+        ..add(Keys.Country, country)
+        ..add(Keys.TxRef, txRef)
+        ..add(Keys.Amount, amount)
+        ..add(Keys.PaymentType, paymentType)
+        ..add(Keys.Email, email)
+        ..add(Keys.Firstname, firstname)
+        ..add(Keys.Lastname, lastname)
+        ..add(Keys.Meta, meta)
+        ..add(Keys.SuggestedAuth, "PIN"),
     );
   }
 
-  final HttpWrapper _httpClient;
+  final HttpWrapper _http;
   final Encryption _encryption;
-  final ChargePayload payload;
+  final Payload payload;
 
   Future<http.Response> charge() {
-    return _httpClient.post(
+    return _http.post(
       Endpoints.directCharge,
       <String, dynamic>{
         "PBFPubKey": Rave().publicKey,

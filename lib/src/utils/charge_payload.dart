@@ -2,52 +2,35 @@ import 'dart:convert' show json;
 
 import 'package:ravepay/src/rave.dart';
 
-class ChargePayload {
-  ChargePayload({
-    this.currency = "NGN",
-    this.country = "NG",
-    String txRef,
-    this.amount,
-    this.paymentType,
-    this.email,
-    this.firstname,
-    this.lastname,
-    this.meta,
-    this.suggestedAuth,
-  })  : assert(currency != null),
-        assert(country != null),
-        this.txRef = txRef ??
-            "txref-" + DateTime.now().millisecondsSinceEpoch.toString();
+class Keys {
+  Keys._();
 
-  String currency;
-  String country;
-  String txRef;
-  String amount;
-  String paymentType;
-  String email;
-  String firstname;
-  String lastname;
-  String meta;
-  String suggestedAuth;
+  static const String PublicKey = "PBFPubKey";
+  static const String Currency = "currency";
+  static const String Country = "country";
+  static const String TxRef = "txRef";
+  static const String Amount = "amount";
+  static const String PaymentType = "paymentType";
+  static const String Email = "email";
+  static const String Firstname = "firstname";
+  static const String Lastname = "lastname";
+  static const String Meta = "meta";
+  static const String SuggestedAuth = "suggested_auth";
+}
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'PBFPubKey': Rave().publicKey,
-      'currency': currency,
-      'country': country,
-      'txRef': txRef,
-      'amount': amount,
-      'paymentType': paymentType,
-      'email': email,
-      'firstname': firstname,
-      'lastname': lastname,
-      'meta': meta,
-      'suggested_auth': suggestedAuth,
-    };
+class Payload {
+  Payload() {
+    add(Keys.PublicKey, Rave().publicKey);
+    add(Keys.TxRef,
+        "txref-" + DateTime.now().millisecondsSinceEpoch.toString());
   }
+
+  final Map<String, dynamic> _hashMap = <String, dynamic>{};
+
+  void add(String key, dynamic value) => _hashMap.putIfAbsent(key, () => value);
+
+  Map<String, dynamic> toMap() => _hashMap;
 
   @override
-  String toString() {
-    return json.encode(toMap());
-  }
+  String toString() => json.encode(_hashMap);
 }

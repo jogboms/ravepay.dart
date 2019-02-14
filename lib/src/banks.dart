@@ -3,11 +3,11 @@ import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 
 class Banks {
-  Banks() : _httpClient = HttpWrapper();
+  Banks() : _http = HttpWrapper();
 
-  final HttpWrapper _httpClient;
+  final HttpWrapper _http;
 
   Future<http.Response> getBanks() {
-    return _httpClient.get(Endpoints.getBanks);
+    return _http.get(Endpoints.getBanks);
   }
 }
