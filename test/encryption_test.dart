@@ -3,25 +3,21 @@ import 'package:test/test.dart';
 
 import '_constants.dart';
 
-const encryption = const Encryption(secretKey: SECK);
-
 void main() {
   group('Grouped Encyption', () {
+    const _encryption = const Encryption(secretKey: SECK);
+
     test('generateKey', () {
-      final res = encryption.generateKey(SECK);
-      expect(res, GENERATED_KEY);
+      expect(_encryption.generateKey(SECK), GENERATED_KEY);
     });
     test('integrityHash', () {
-      final res = encryption.integrityHash(RAW_DATA);
-      expect(res, GENERATED_INTEGRITY_HASH);
+      expect(_encryption.integrityHash(RAW_DATA), GENERATED_INTEGRITY_HASH);
     });
     test('encrypt', () {
-      final res = encryption.encrypt(RAW_DATA);
-      expect(res, ENCRYPTED_DATA);
+      expect(_encryption.encrypt(RAW_DATA), ENCRYPTED_DATA);
     });
     test('decrypt', () {
-      final res = encryption.decrypt(ENCRYPTED_DATA);
-      expect(res, RAW_DATA);
+      expect(_encryption.decrypt(ENCRYPTED_DATA), RAW_DATA);
     });
   });
 }

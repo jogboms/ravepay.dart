@@ -9,7 +9,7 @@ class Validate {
 
   final HttpWrapper _http;
 
-  Future<http.Response> validate({
+  Future<http.Response> card({
     @required String txRef,
     @required String otp,
   }) {
@@ -24,7 +24,7 @@ class Validate {
     );
   }
 
-  Future<http.Response> validateAccount({
+  Future<http.Response> account({
     @required String txRef,
     @required String otp,
   }) {
