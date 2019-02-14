@@ -34,6 +34,7 @@ class PreAuth {
     @required String chargeType,
     String deviceFingerprint,
     String recurringStop,
+    bool includeIntegrityHash,
   }) {
     assert(cardno != null);
     assert(cvv != null);
@@ -68,6 +69,7 @@ class PreAuth {
       chargeType: chargeType,
       deviceFingerprint: deviceFingerprint,
       recurringStop: recurringStop,
+      includeIntegrityHash: includeIntegrityHash,
     ).charge();
   }
 

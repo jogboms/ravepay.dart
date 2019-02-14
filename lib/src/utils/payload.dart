@@ -30,12 +30,19 @@ class Keys {
   static const String ChargeType = "charge_type";
   static const String DeviceFingerprint = "device_fingerprint";
   static const String RecurringStop = "recurring_stop";
+  static const String IntegrityHash = "integrity_hash";
   static const String IncludeIntegrityHash = "include_integrity_hash";
   static const String Accountbank = "accountbank";
   static const String Accountnumber = "accountnumber";
-  static const String IsUssd = "is_ussd";
   static const String OrderRef = "orderRef";
   static const String Payment_Type = "payment_type";
+  static const String IsInternetBanking = "is_internet_banking";
+  static const String IsUssd = "is_ussd";
+  static const String IsMpesa = 'is_mpesa';
+  static const String IsQr = 'is_qr';
+  static const String IsMcash = 'is_mcash';
+  static const String RedirectUrl = 'redirect_url';
+  static const String QueryStringData = 'QUERY_STRING_DATA';
 }
 
 class Payload {
@@ -49,8 +56,24 @@ class Payload {
 
   void add(String key, dynamic value) => _hashMap.putIfAbsent(key, () => value);
 
+  void addBuilder(
+    String key,
+    dynamic Function(Map<String, dynamic> params) builder,
+  ) {
+    return _hashMap.putIfAbsent(
+      key,
+      () => builder(toMap()),
+    );
+  }
+
   Map<String, dynamic> toMap() => _hashMap;
 
+  bool containsKey(String key) => toMap().containsKey(key);
+
+  dynamic remove(String key) => toMap().remove(key);
+
+  dynamic getItem(String key) => containsKey(key) == true ? toMap()[key] : null;
+
   @override
-  String toString() => json.encode(_hashMap);
+  String toString() => json.encode(toMap());
 }
