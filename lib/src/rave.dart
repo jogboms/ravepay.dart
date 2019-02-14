@@ -13,7 +13,8 @@ class Rave {
     @required this.production,
   })  : assert(publicKey != null),
         assert(secretKey != null),
-        assert(production != null);
+        assert(production != null),
+        baseUrl = production ? PROD_BASE_UI : STAGING_BASE_UI;
 
   @visibleForTesting
   static void reset() {
@@ -35,8 +36,16 @@ class Rave {
   }
 
   static Rave _instance;
+  static const PROD_BASE_UI = "https://api.ravepay.co/";
+  static const STAGING_BASE_UI = "https://ravesandboxapi.flutterwave.com/";
 
   final String publicKey;
   final String secretKey;
   final bool production;
+  final String baseUrl;
+
+  @override
+  String toString() {
+    return 'Rave(publicKey: $publicKey, secretKey: $secretKey, production: $production, baseUrl: $baseUrl)';
+  }
 }
