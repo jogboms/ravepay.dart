@@ -11,8 +11,6 @@ class Status {
   Future<http.Response> requery({
     String flwRef,
     String txRef,
-    String lastAttempt,
-    String onlySuccessful,
   }) {
     assert(!(flwRef == null && txRef == null),
         'You must pass either flwRef or txRef');

@@ -15,4 +15,6 @@ class Endpoints {
   static const String refundTransaction = "/gpx/merchant/transactions/refund";
   static const String disburse = "/merchant/disburse";
   static const String convertCurrency = "/$_base/forex";
+  static const String tokenizeCard = "/$_base/tokenized/charge";
+  static const String tokenizeAccount = "/$_base/tokenized/account/charge";
 }
