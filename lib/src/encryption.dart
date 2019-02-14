@@ -8,7 +8,7 @@ import 'package:tripledes/tripledes.dart' show BlockCipher, DESEngine;
 class Encryption {
   const Encryption({
     @required this.secretKey,
-  });
+  }) : assert(secretKey != null);
 
   static const String ALGORITHM = "3DES-24";
   static const String _TARGET = "FLWSECK-";
