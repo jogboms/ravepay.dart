@@ -16,6 +16,21 @@ class Keys {
   static const String Lastname = "lastname";
   static const String Meta = "meta";
   static const String SuggestedAuth = "suggested_auth";
+  static const String Cardno = "cardno";
+  static const String SettlementToken = "settlement_token";
+  static const String Cvv = "cvv";
+  static const String Phonenumber = "phonenumber";
+  static const String Billingzip = "billingzip";
+  static const String Expiryyear = "expiryyear";
+  static const String Expirymonth = "expirymonth";
+  static const String IP = "IP";
+  static const String Narration = "narration";
+  static const String Pin = "pin";
+  static const String Bvn = "bvn";
+  static const String ChargeType = "charge_type";
+  static const String DeviceFingerprint = "device_fingerprint";
+  static const String RecurringStop = "recurring_stop";
+  static const String IncludeIntegrityHash = "include_integrity_hash";
 }
 
 class Payload {
