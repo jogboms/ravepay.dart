@@ -2,9 +2,9 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/encryption.dart';
 import 'package:ravepay/src/rave.dart';
-import 'package:ravepay/src/utils/charge_payload.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
+import 'package:ravepay/src/utils/payload.dart';
 
 class Charge {
   Charge({
