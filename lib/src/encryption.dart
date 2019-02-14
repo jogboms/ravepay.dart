@@ -10,6 +10,7 @@ class Encryption {
     @required this.secretKey,
   });
 
+  static const String ALGORITHM = "3DES-24";
   static const String _TARGET = "FLWSECK-";
   static const int _SUB_STRING_LENGTH = 12;
 
