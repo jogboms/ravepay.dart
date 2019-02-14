@@ -1,6 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/encryption.dart';
+import 'package:ravepay/src/models/auth.dart';
+import 'package:ravepay/src/models/countries.dart';
+import 'package:ravepay/src/models/currencies.dart';
 import 'package:ravepay/src/rave.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
@@ -13,8 +16,8 @@ class Charge {
         _http = HttpWrapper();
 
   factory Charge.basic({
-    String currency = "NGN",
-    String country = "NG",
+    String currency = Currencies.NAIRA,
+    String country = Countries.NIGERIA,
     String txRef,
     String amount,
     String paymentType,
@@ -38,8 +41,8 @@ class Charge {
   }
 
   factory Charge.pin({
-    String currency = "NGN",
-    String country = "NG",
+    String currency = Currencies.NAIRA,
+    String country = Countries.NIGERIA,
     String txRef,
     String amount,
     String paymentType,
@@ -59,7 +62,7 @@ class Charge {
         ..add(Keys.Firstname, firstname)
         ..add(Keys.Lastname, lastname)
         ..add(Keys.Meta, meta)
-        ..add(Keys.SuggestedAuth, "PIN"),
+        ..add(Keys.SuggestedAuth, AuthType.PIN),
     );
   }
 
@@ -73,8 +76,8 @@ class Charge {
     @required String iP,
     @required String txRef,
     @required String chargeType,
-    String currency = "NGN",
-    String country = "NG",
+    String currency = Currencies.NAIRA,
+    String country = Countries.NIGERIA,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
@@ -136,8 +139,8 @@ class Charge {
     @required String txRef,
     @required String accountbank,
     @required String accountnumber,
-    String currency = "NGN",
-    String country = "NG",
+    String currency = Currencies.NAIRA,
+    String country = Countries.NIGERIA,
     String firstname,
     String lastname,
     String narration,

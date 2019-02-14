@@ -12,7 +12,6 @@ class Endpoints {
   static const String capturePreauthorizeCard = "/$_base/capture";
   static const String refundOrVoidPreauthorization = "/$_base/refundorvoid";
   static const String getFees = "/$_base/fee";
-  static const String refundTransaction = "/gpx/merchant/transactions/refund";
   static const String disburse = "/merchant/disburse";
   static const String convertCurrency = "/$_base/forex";
   static const String tokenizeCard = "/$_base/tokenized/charge";
