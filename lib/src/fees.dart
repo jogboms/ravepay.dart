@@ -31,6 +31,7 @@ class Fees {
   Future<http.Response> account({
     @required String amount,
     @required String currency,
+    int ptype,
   }) {
     assert(amount != null);
     assert(currency != null);
@@ -40,7 +41,7 @@ class Fees {
         'PBFPubKey': Rave().publicKey,
         'amount': amount,
         'currency': currency,
-        'ptype': 2
+        'ptype': ptype ?? 2
       },
     );
   }

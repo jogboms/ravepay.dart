@@ -31,6 +31,11 @@ class Keys {
   static const String DeviceFingerprint = "device_fingerprint";
   static const String RecurringStop = "recurring_stop";
   static const String IncludeIntegrityHash = "include_integrity_hash";
+  static const String Accountbank = "accountbank";
+  static const String Accountnumber = "accountnumber";
+  static const String IsUssd = "is_ussd";
+  static const String OrderRef = "orderRef";
+  static const String Payment_Type = "payment_type";
 }
 
 class Payload {
