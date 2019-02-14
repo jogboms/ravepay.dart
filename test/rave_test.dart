@@ -2,9 +2,7 @@ import 'package:ravepay/src/rave.dart';
 import 'package:test/test.dart';
 
 import '_constants.dart';
-
-final Matcher isAssertionError = TypeMatcher<AssertionError>();
-final Matcher throwsAssertionError = throwsA(isAssertionError);
+import '_utils.dart';
 
 void main() {
   group('Grouped Rave', () {
@@ -14,6 +12,20 @@ void main() {
       test('production', () => expect(Rave().production, true));
       test('publicKey', () => expect(Rave().publicKey, PUBK));
       test('secretKey', () => expect(Rave().secretKey, SECK));
+      test('baseUrl', () => expect(Rave().baseUrl, Rave.PROD_BASE_UI));
+    });
+
+    group('Grouped BaseUrl', () {
+      test('production', () {
+        Rave.reset();
+        Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
+        expect(Rave().baseUrl, Rave.PROD_BASE_UI);
+      });
+      test('staging', () {
+        Rave.reset();
+        Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
+        expect(Rave().baseUrl, Rave.STAGING_BASE_UI);
+      });
     });
 
     group('Grouped Assertions', () {
