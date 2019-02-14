@@ -3,19 +3,19 @@ import 'package:ravepay/src/rave.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 
-class Status {
-  Status() : _http = HttpWrapper();
+class Transactions {
+  Transactions() : _http = HttpWrapper();
 
   final HttpWrapper _http;
 
-  Future<http.Response> requery({
+  Future<http.Response> verify({
     String flwRef,
     String txRef,
   }) {
     assert(!(flwRef == null && txRef == null),
         'You must pass either flwRef or txRef');
     return _http.post(
-      Endpoints.requeryTransaction,
+      Endpoints.verifyTransaction,
       <String, dynamic>{
         'SECKEY': Rave().secretKey,
         'flwref': flwRef,
@@ -24,7 +24,7 @@ class Status {
     );
   }
 
-  Future<http.Response> xrequery({
+  Future<http.Response> requery({
     String flwRef,
     String txRef,
     String lastAttempt,
@@ -33,7 +33,7 @@ class Status {
     assert(!(flwRef == null && txRef == null),
         'You must pass either flwRef or txRef');
     return _http.post(
-      Endpoints.xRequeryTransaction,
+      Endpoints.requeryTransaction,
       <String, dynamic>{
         'SECKEY': Rave().secretKey,
         'flwref': flwRef,

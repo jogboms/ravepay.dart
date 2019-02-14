@@ -7,8 +7,8 @@ class Endpoints {
   static const String validateCardCharge = "/$_base/validatecharge";
   static const String validateAccountCharge = "/$_base/validate";
   static const String getBanks = "/$_base/flwpbf-banks.js?json=1";
-  static const String requeryTransaction = "/$_base/v2/verify";
-  static const String xRequeryTransaction = "/$_base/v2/xrequery";
+  static const String verifyTransaction = "/$_base/v2/verify";
+  static const String requeryTransaction = "/$_base/v2/xrequery";
   static const String capturePreauthorizeCard = "/$_base/capture";
   static const String refundOrVoidPreauthorization = "/$_base/refundorvoid";
   static const String getFees = "/$_base/fee";
