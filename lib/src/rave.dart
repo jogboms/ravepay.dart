@@ -15,12 +15,17 @@ class Rave {
         assert(secretKey != null),
         assert(production != null);
 
+  @visibleForTesting
+  static void reset() {
+    _instance = null;
+  }
+
   static void init({
     @required String publicKey,
     @required String secretKey,
     @required bool production,
   }) {
-    assert(_instance != null,
+    assert(_instance == null,
         'Are you trying to reset the previous keys by calling Rave.init() again?.');
     _instance = Rave._(
       publicKey: publicKey,
