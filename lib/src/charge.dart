@@ -9,6 +9,7 @@ import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/rave.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
+import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/payload.dart';
 
 class Charge {
@@ -303,6 +304,9 @@ class Charge {
         );
       payload..add(Keys.QueryStringData, queryStringData);
     }
+
+    Log().debug("Charge.charge()", payload.toMap());
+
     final _res = await _http.post(
       Endpoints.directCharge,
       <String, dynamic>{

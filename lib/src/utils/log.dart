@@ -9,9 +9,11 @@ class Log {
 
   final bool production;
 
-  void debug(dynamic payload) {
+  void debug(String tag, [dynamic payload = '']) {
     if (!production) {
+      print('= $tag ===============\n');
       print(payload);
+      print('\n==========================');
     }
   }
 }
