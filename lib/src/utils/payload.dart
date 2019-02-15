@@ -1,5 +1,6 @@
 import 'dart:convert' show json;
 
+import 'package:meta/meta.dart';
 import 'package:ravepay/src/rave.dart';
 
 typedef dynamic PayloadBuilder(Map<String, dynamic> params);
@@ -50,16 +51,18 @@ class Keys {
 class Payload {
   Payload() {
     add(Keys.PublicKey, Rave().publicKey);
-    add(Keys.TxRef,
-        "txref-" + DateTime.now().millisecondsSinceEpoch.toString());
+    add(Keys.TxRef, 'txref-${DateTime.now().millisecondsSinceEpoch}');
   }
 
   final Map<String, dynamic> _hashMap = <String, dynamic>{};
 
-  void add(String key, dynamic value) {
+  Payload add(String key, dynamic value) {
     if (value != null) {
-      return _hashMap.putIfAbsent(key, () => value);
+      _hashMap.containsKey(key)
+          ? _hashMap[key] = value
+          : _hashMap.putIfAbsent(key, () => value);
     }
+    return this;
   }
 
   void addBuilder(String key, PayloadBuilder builder) =>
@@ -72,6 +75,9 @@ class Payload {
   dynamic remove(String key) => toMap().remove(key);
 
   dynamic getItem(String key) => containsKey(key) == true ? toMap()[key] : null;
+
+  @visibleForTesting
+  int get length => toMap().length;
 
   @override
   String toString() => json.encode(toMap());
