@@ -1,9 +1,10 @@
-import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/constants/auth.dart';
+import 'package:ravepay/src/constants/countries.dart';
+import 'package:ravepay/src/constants/currencies.dart';
 import 'package:ravepay/src/encryption.dart';
-import 'package:ravepay/src/models/auth.dart';
-import 'package:ravepay/src/models/countries.dart';
-import 'package:ravepay/src/models/currencies.dart';
+import 'package:ravepay/src/models/response.dart';
+import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/rave.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
@@ -22,11 +23,11 @@ class Charge {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String iP,
     @required String txRef,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String suggestedAuth,
+    String iP,
     String settlementToken,
     String phonenumber,
     String billingzip,
@@ -101,13 +102,13 @@ class Charge {
   factory Charge.account({
     @required String amount,
     @required String email,
-    @required String iP,
     @required String txRef,
     @required String chargeType,
     @required String accountbank,
     @required String accountnumber,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
+    String iP,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
@@ -128,7 +129,6 @@ class Charge {
     assert(accountbank != null);
     assert(accountnumber != null);
     assert(email != null);
-    assert(iP != null);
     assert(txRef != null);
     assert(chargeType != null);
     return Charge(
@@ -167,11 +167,11 @@ class Charge {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String iP,
     @required String txRef,
     @required String chargeType,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
+    String iP,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
@@ -192,7 +192,6 @@ class Charge {
     assert(expiryyear != null);
     assert(expirymonth != null);
     assert(email != null);
-    assert(iP != null);
     assert(txRef != null);
     assert(chargeType != null);
     return Charge(
@@ -268,7 +267,7 @@ class Charge {
   final Payload payload;
   static final _encryption = Encryption(secretKey: Rave().secretKey);
 
-  Future<http.Response> charge() {
+  Future<Response<Result>> charge() async {
     if (payload.getItem(Keys.IncludeIntegrityHash) == true) {
       payload.remove(Keys.IncludeIntegrityHash);
       final integrityHash = _encryption.integrityHash(payload.toMap());
@@ -279,13 +278,18 @@ class Charge {
         );
       payload..add(Keys.QueryStringData, queryStringData);
     }
-    return _http.post(
+    final _res = await _http.post(
       Endpoints.directCharge,
       <String, dynamic>{
         "PBFPubKey": Rave().publicKey,
         "client": _encryption.encrypt(payload.toMap()),
         "alg": Encryption.ALGORITHM,
       },
+    );
+
+    return Response<Result>(
+      _res,
+      onTransform: (dynamic data, _) => Result.fromJson(data),
     );
   }
 }

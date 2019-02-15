@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/charge.dart';
+import 'package:ravepay/src/models/response.dart';
+import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/rave.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
@@ -10,7 +12,7 @@ class PreAuth {
 
   final HttpWrapper _http;
 
-  Future<http.Response> preauth({
+  Future<Response<Result>> preauth({
     @required String cardno,
     String currency,
     String suggestedAuth,
