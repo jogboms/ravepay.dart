@@ -10,6 +10,7 @@ void main() async {
     expiryyear: '21',
     firstname: "Jeremiah",
     lastname: "Ogbomo",
+    meta: [Meta("hello", "world")],
   );
 
   final res = await charge.charge();
