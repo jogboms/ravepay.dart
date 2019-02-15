@@ -3,7 +3,7 @@ import 'dart:convert' show Utf8Encoder, json;
 import 'package:convert/convert.dart' show hex;
 import 'package:crypto/crypto.dart' show md5, sha256;
 import 'package:meta/meta.dart' show required, visibleForTesting;
-import 'package:tripledes/tripledes.dart' show BlockCipher, DESEngine;
+import 'package:tripledes/tripledes.dart' show BlockCipher, TripleDESEngine;
 
 class Encryption {
   const Encryption({
@@ -17,13 +17,13 @@ class Encryption {
   final String secretKey;
 
   String encrypt(Map<String, dynamic> data) {
-    return BlockCipher(DESEngine(), generateKey(secretKey))
+    return BlockCipher(TripleDESEngine(), generateKey(secretKey))
         .encodeB64(json.encode(data));
   }
 
   Map<String, dynamic> decrypt(String data) {
     final String _data = BlockCipher(
-      DESEngine(),
+      TripleDESEngine(),
       generateKey(secretKey),
     ).decodeB64(data);
     return json.decode(_data);
