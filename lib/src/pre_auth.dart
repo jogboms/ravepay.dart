@@ -1,6 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/charge.dart';
+import 'package:ravepay/src/constants/countries.dart';
+import 'package:ravepay/src/constants/currencies.dart';
+import 'package:ravepay/src/models/meta.dart';
 import 'package:ravepay/src/models/response.dart';
 import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/rave.dart';
@@ -14,26 +17,26 @@ class PreAuth {
 
   Future<Response<Result>> preauth({
     @required String cardno,
-    String currency,
-    String suggestedAuth,
-    String country,
-    String settlementToken,
     @required String cvv,
     @required String amount,
-    String phonenumber,
-    String billingzip,
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
+    @required String chargeType,
+    String country = Countries.NIGERIA,
+    String currency = Currencies.NAIRA,
+    String suggestedAuth,
+    String txRef,
+    String iP,
+    String settlementToken,
+    String phonenumber,
+    String billingzip,
     String firstname,
     String lastname,
-    @required String iP,
     String narration,
-    @required String txRef,
-    String meta,
+    List<Meta> meta,
     String pin,
     String bvn,
-    @required String chargeType,
     String deviceFingerprint,
     String recurringStop,
     bool includeIntegrityHash,
@@ -44,8 +47,6 @@ class PreAuth {
     assert(expiryyear != null);
     assert(expirymonth != null);
     assert(email != null);
-    assert(iP != null);
-    assert(txRef != null);
     assert(chargeType != null);
     return Charge.preauth(
       cardno: cardno,

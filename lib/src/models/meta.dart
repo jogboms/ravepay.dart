@@ -1,19 +1,16 @@
 import 'package:ravepay/src/models/main.dart';
 
 class Meta extends Model {
-  Meta(
-    this.metaname,
-    this.metavalue,
-  );
+  Meta(this.name, this.value);
 
-  final String metaname;
-  final String metavalue;
+  final String name;
+  final String value;
 
   @override
   Map<String, String> toMap() {
     return <String, String>{
-      "metaname": metaname,
-      "metavalue": metavalue,
+      "metaname": name,
+      "metavalue": value,
     };
   }
 }

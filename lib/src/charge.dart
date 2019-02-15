@@ -3,6 +3,7 @@ import 'package:ravepay/src/constants/auth.dart';
 import 'package:ravepay/src/constants/countries.dart';
 import 'package:ravepay/src/constants/currencies.dart';
 import 'package:ravepay/src/encryption.dart';
+import 'package:ravepay/src/models/meta.dart';
 import 'package:ravepay/src/models/response.dart';
 import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/rave.dart';
@@ -34,7 +35,7 @@ class Charge {
     String phonenumber,
     String billingzip,
     String narration,
-    String meta,
+    List<Meta> meta,
     String pin,
     String bvn,
     String redirectUrl,
@@ -86,18 +87,25 @@ class Charge {
     @required String email,
     @required String firstname,
     @required String lastname,
+    @required String pin,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
     String paymentType,
-    String meta,
+    List<Meta> meta,
   }) {
+    assert(amount != null);
+    assert(pin != null);
+    assert(email != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
         ..add(Keys.Country, country)
         ..add(Keys.TxRef, txRef)
         ..add(Keys.Amount, amount)
+        ..add(Keys.Pin, pin)
         ..add(Keys.PaymentType, paymentType)
         ..add(Keys.Email, email)
         ..add(Keys.Firstname, firstname)
@@ -124,7 +132,7 @@ class Charge {
     String phonenumber,
     String billingzip,
     String narration,
-    String meta,
+    List<Meta> meta,
     String pin,
     String bvn,
     String deviceFingerprint,
@@ -188,7 +196,7 @@ class Charge {
     String phonenumber,
     String billingzip,
     String narration,
-    String meta,
+    List<Meta> meta,
     String pin,
     String bvn,
     String deviceFingerprint,
@@ -246,7 +254,7 @@ class Charge {
     String txRef,
     String iP,
     String narration,
-    String meta,
+    List<Meta> meta,
     String deviceFingerprint,
     bool includeIntegrityHash,
   }) {
