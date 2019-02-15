@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:ravepay/src/constants/auth.dart';
 import 'package:ravepay/src/constants/countries.dart';
 import 'package:ravepay/src/constants/currencies.dart';
 import 'package:ravepay/src/encryption.dart';
@@ -89,19 +88,35 @@ class Charge {
     @required String firstname,
     @required String lastname,
     @required String pin,
+    @required String cardno,
+    @required String cvv,
+    @required String expiryyear,
+    @required String expirymonth,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
     String paymentType,
     List<Meta> meta,
+    String iP,
+    String redirectUrl,
+    String chargeType,
+    bool includeIntegrityHash,
   }) {
     assert(amount != null);
     assert(pin != null);
     assert(email != null);
     assert(firstname != null);
     assert(lastname != null);
+    assert(cardno != null);
+    assert(cvv != null);
+    assert(expiryyear != null);
+    assert(expirymonth != null);
     return Charge(
       payload: Payload()
+        ..add(Keys.Cardno, cardno)
+        ..add(Keys.Cvv, cvv)
+        ..add(Keys.Expiryyear, expiryyear)
+        ..add(Keys.Expirymonth, expirymonth)
         ..add(Keys.Currency, currency)
         ..add(Keys.Country, country)
         ..add(Keys.TxRef, txRef)
@@ -112,14 +127,17 @@ class Charge {
         ..add(Keys.Firstname, firstname)
         ..add(Keys.Lastname, lastname)
         ..add(Keys.Meta, meta)
-        ..add(Keys.SuggestedAuth, AuthType.PIN),
+        ..add(Keys.IP, iP)
+        ..add(Keys.RedirectUrl, redirectUrl)
+        ..add(Keys.ChargeType, chargeType)
+        // ..add(Keys.SuggestedAuth, AuthType.PIN)
+        ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
     );
   }
 
   factory Charge.account({
     @required String amount,
     @required String email,
-    @required String chargeType,
     @required String accountbank,
     @required String accountnumber,
     @required String firstname,
@@ -128,6 +146,7 @@ class Charge {
     String country = Countries.NIGERIA,
     String iP,
     String txRef,
+    String chargeType,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
@@ -146,7 +165,6 @@ class Charge {
     assert(accountbank != null);
     assert(accountnumber != null);
     assert(email != null);
-    assert(chargeType != null);
     assert(firstname != null);
     assert(lastname != null);
     return Charge(
@@ -305,7 +323,7 @@ class Charge {
       payload..add(Keys.QueryStringData, queryStringData);
     }
 
-    Log().debug("Charge.charge()", payload.toMap());
+    Log().debug("Charge.charge()", payload);
 
     final _res = await _http.post(
       Endpoints.directCharge,
@@ -316,9 +334,13 @@ class Charge {
       },
     );
 
-    return Response<Result>(
+    final _response = Response<Result>(
       _res,
       onTransform: (dynamic data, _) => Result.fromJson(data),
     );
+
+    Log().debug("Charge.charge() -> Response", _response);
+
+    return _response;
   }
 }

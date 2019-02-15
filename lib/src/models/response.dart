@@ -42,11 +42,26 @@ class Response<T> extends Model {
   }) {
     try {
       final dynamic responseJson = json.decode(_response.body);
-      status = responseJson != null ? responseJson["status"] : "empty";
-      message = responseJson != null && responseJson["message"] != null
+      status = _response.statusCode < 300
+          ? (responseJson != null &&
+                  responseJson is Map &&
+                  responseJson.containsKey("status")
+              ? responseJson["status"]
+              : 'success')
+          : "empty";
+      message = responseJson != null &&
+              responseJson is Map &&
+              responseJson.containsKey("message") &&
+              responseJson["message"] != null
           ? responseJson["message"]
           : !Rave().production ? _response.reasonPhrase : Strings.errorMessage;
-      rawData = _response.statusCode < 300 ? responseJson["data"] : null;
+      rawData = _response.statusCode < 300
+          ? (responseJson != null &&
+                  responseJson is Map &&
+                  responseJson.containsKey("data")
+              ? responseJson["data"]
+              : responseJson)
+          : null;
     } catch (e) {
       status = "empty";
       message = _response.statusCode == 502 && Rave().production
@@ -102,5 +117,7 @@ class Response<T> extends Model {
   bool get isTooLarge => statusCode == 413;
 
   @override
-  Map<String, dynamic> toMap() => rawData;
+  Map<String, dynamic> toMap() {
+    return rawData is Map ? rawData : <String, dynamic>{':( Rave': rawData};
+  }
 }
