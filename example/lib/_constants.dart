@@ -1,0 +1,2 @@
+const PUBK = "FLWPUBK-e634d14d9ded04eaf05d5b63a0a06d2f-X";
+const SECK = "FLWSECK-bb971402072265fb156e90a3578fe5e6-X";

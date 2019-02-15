@@ -1,12 +1,15 @@
-import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/constants/auth.dart';
+import 'package:ravepay/src/constants/countries.dart';
+import 'package:ravepay/src/constants/currencies.dart';
 import 'package:ravepay/src/encryption.dart';
-import 'package:ravepay/src/models/auth.dart';
-import 'package:ravepay/src/models/countries.dart';
-import 'package:ravepay/src/models/currencies.dart';
+import 'package:ravepay/src/models/meta.dart';
+import 'package:ravepay/src/models/response.dart';
+import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/rave.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
+import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/payload.dart';
 
 class Charge {
@@ -22,18 +25,18 @@ class Charge {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String iP,
-    @required String txRef,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
+    String txRef,
     String suggestedAuth,
+    String iP,
     String settlementToken,
     String phonenumber,
     String billingzip,
-    String firstname,
-    String lastname,
     String narration,
-    String meta,
+    List<Meta> meta,
     String pin,
     String bvn,
     String redirectUrl,
@@ -42,6 +45,14 @@ class Charge {
     String recurringStop,
     bool includeIntegrityHash,
   }) {
+    assert(cardno != null);
+    assert(cvv != null);
+    assert(amount != null);
+    assert(expiryyear != null);
+    assert(expirymonth != null);
+    assert(email != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -73,22 +84,29 @@ class Charge {
   }
 
   factory Charge.pin({
+    @required String amount,
+    @required String email,
+    @required String firstname,
+    @required String lastname,
+    @required String pin,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
-    String amount,
     String paymentType,
-    String email,
-    String firstname,
-    String lastname,
-    String meta,
+    List<Meta> meta,
   }) {
+    assert(amount != null);
+    assert(pin != null);
+    assert(email != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
         ..add(Keys.Country, country)
         ..add(Keys.TxRef, txRef)
         ..add(Keys.Amount, amount)
+        ..add(Keys.Pin, pin)
         ..add(Keys.PaymentType, paymentType)
         ..add(Keys.Email, email)
         ..add(Keys.Firstname, firstname)
@@ -101,21 +119,21 @@ class Charge {
   factory Charge.account({
     @required String amount,
     @required String email,
-    @required String iP,
-    @required String txRef,
     @required String chargeType,
     @required String accountbank,
     @required String accountnumber,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
+    String iP,
+    String txRef,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
     String billingzip,
-    String firstname,
-    String lastname,
     String narration,
-    String meta,
+    List<Meta> meta,
     String pin,
     String bvn,
     String deviceFingerprint,
@@ -128,9 +146,9 @@ class Charge {
     assert(accountbank != null);
     assert(accountnumber != null);
     assert(email != null);
-    assert(iP != null);
-    assert(txRef != null);
     assert(chargeType != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
@@ -167,19 +185,19 @@ class Charge {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String iP,
-    @required String txRef,
     @required String chargeType,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
+    String txRef,
+    String iP,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
     String billingzip,
-    String firstname,
-    String lastname,
     String narration,
-    String meta,
+    List<Meta> meta,
     String pin,
     String bvn,
     String deviceFingerprint,
@@ -192,9 +210,9 @@ class Charge {
     assert(expiryyear != null);
     assert(expirymonth != null);
     assert(email != null);
-    assert(iP != null);
-    assert(txRef != null);
     assert(chargeType != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -228,19 +246,26 @@ class Charge {
     @required String amount,
     @required String phonenumber,
     @required String email,
-    @required String iP,
-    @required String txRef,
     @required String accountbank,
     @required String accountnumber,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
-    String firstname,
-    String lastname,
+    String txRef,
+    String iP,
     String narration,
-    String meta,
+    List<Meta> meta,
     String deviceFingerprint,
     bool includeIntegrityHash,
   }) {
+    assert(amount != null);
+    assert(accountbank != null);
+    assert(accountnumber != null);
+    assert(email != null);
+    assert(phonenumber != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
@@ -268,7 +293,7 @@ class Charge {
   final Payload payload;
   static final _encryption = Encryption(secretKey: Rave().secretKey);
 
-  Future<http.Response> charge() {
+  Future<Response<Result>> charge() async {
     if (payload.getItem(Keys.IncludeIntegrityHash) == true) {
       payload.remove(Keys.IncludeIntegrityHash);
       final integrityHash = _encryption.integrityHash(payload.toMap());
@@ -279,13 +304,21 @@ class Charge {
         );
       payload..add(Keys.QueryStringData, queryStringData);
     }
-    return _http.post(
+
+    Log().debug("Charge.charge()", payload.toMap());
+
+    final _res = await _http.post(
       Endpoints.directCharge,
       <String, dynamic>{
         "PBFPubKey": Rave().publicKey,
         "client": _encryption.encrypt(payload.toMap()),
         "alg": Encryption.ALGORITHM,
       },
+    );
+
+    return Response<Result>(
+      _res,
+      onTransform: (dynamic data, _) => Result.fromJson(data),
     );
   }
 }
