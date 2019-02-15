@@ -2,6 +2,8 @@ import 'dart:convert' show json;
 
 import 'package:ravepay/src/rave.dart';
 
+typedef dynamic PayloadBuilder(Map<String, dynamic> params);
+
 class Keys {
   Keys._();
 
@@ -54,17 +56,14 @@ class Payload {
 
   final Map<String, dynamic> _hashMap = <String, dynamic>{};
 
-  void add(String key, dynamic value) => _hashMap.putIfAbsent(key, () => value);
-
-  void addBuilder(
-    String key,
-    dynamic Function(Map<String, dynamic> params) builder,
-  ) {
-    return _hashMap.putIfAbsent(
-      key,
-      () => builder(toMap()),
-    );
+  void add(String key, dynamic value) {
+    if (value != null) {
+      return _hashMap.putIfAbsent(key, () => value);
+    }
   }
+
+  void addBuilder(String key, PayloadBuilder builder) =>
+      add(key, builder(toMap()));
 
   Map<String, dynamic> toMap() => _hashMap;
 
