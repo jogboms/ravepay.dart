@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/utils/log.dart';
 
 class Rave {
   factory Rave() {
@@ -33,6 +34,8 @@ class Rave {
       secretKey: secretKey,
       production: production,
     );
+    // Initialize logger
+    Log.init(production);
   }
 
   static Rave _instance;
