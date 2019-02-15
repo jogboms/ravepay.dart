@@ -23,16 +23,16 @@ class Charge {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String txRef,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
+    String txRef,
     String suggestedAuth,
     String iP,
     String settlementToken,
     String phonenumber,
     String billingzip,
-    String firstname,
-    String lastname,
     String narration,
     String meta,
     String pin,
@@ -43,6 +43,14 @@ class Charge {
     String recurringStop,
     bool includeIntegrityHash,
   }) {
+    assert(cardno != null);
+    assert(cvv != null);
+    assert(amount != null);
+    assert(expiryyear != null);
+    assert(expirymonth != null);
+    assert(email != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -74,14 +82,14 @@ class Charge {
   }
 
   factory Charge.pin({
+    @required String amount,
+    @required String email,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
-    String amount,
     String paymentType,
-    String email,
-    String firstname,
-    String lastname,
     String meta,
   }) {
     return Charge(
@@ -102,19 +110,19 @@ class Charge {
   factory Charge.account({
     @required String amount,
     @required String email,
-    @required String txRef,
     @required String chargeType,
     @required String accountbank,
     @required String accountnumber,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String iP,
+    String txRef,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
     String billingzip,
-    String firstname,
-    String lastname,
     String narration,
     String meta,
     String pin,
@@ -129,8 +137,9 @@ class Charge {
     assert(accountbank != null);
     assert(accountnumber != null);
     assert(email != null);
-    assert(txRef != null);
     assert(chargeType != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
@@ -167,17 +176,17 @@ class Charge {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String txRef,
     @required String chargeType,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
+    String txRef,
     String iP,
     String suggestedAuth,
     String settlementToken,
     String phonenumber,
     String billingzip,
-    String firstname,
-    String lastname,
     String narration,
     String meta,
     String pin,
@@ -192,8 +201,9 @@ class Charge {
     assert(expiryyear != null);
     assert(expirymonth != null);
     assert(email != null);
-    assert(txRef != null);
     assert(chargeType != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -227,19 +237,26 @@ class Charge {
     @required String amount,
     @required String phonenumber,
     @required String email,
-    @required String iP,
-    @required String txRef,
     @required String accountbank,
     @required String accountnumber,
+    @required String firstname,
+    @required String lastname,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
-    String firstname,
-    String lastname,
+    String txRef,
+    String iP,
     String narration,
     String meta,
     String deviceFingerprint,
     bool includeIntegrityHash,
   }) {
+    assert(amount != null);
+    assert(accountbank != null);
+    assert(accountnumber != null);
+    assert(email != null);
+    assert(phonenumber != null);
+    assert(firstname != null);
+    assert(lastname != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)

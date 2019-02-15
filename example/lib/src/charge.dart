@@ -8,7 +8,8 @@ void main() async {
     email: 'jeremiahogbomo@gmail.com',
     expirymonth: '12',
     expiryyear: '21',
-    txRef: "MC-${DateTime.now().millisecondsSinceEpoch}",
+    firstname: "Jeremiah",
+    lastname: "Ogbomo",
   );
 
   final res = await charge.charge();
