@@ -4,8 +4,18 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [{
-    "name": "Example",
-    "program": "${workspaceFolder}/lib/main.dart",
+    "name": "Charge",
+    "program": "${workspaceFolder}/lib/charge.dart",
+    "request": "launch",
+    "type": "dart"
+  }, {
+    "name": "Banks",
+    "program": "${workspaceFolder}/lib/banks.dart",
+    "request": "launch",
+    "type": "dart"
+  }, {
+    "name": "PreAuth",
+    "program": "${workspaceFolder}/lib/preauth.dart",
     "request": "launch",
     "type": "dart"
   }]
