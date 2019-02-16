@@ -18,4 +18,14 @@ class Log {
       }
     }
   }
+
+  void error(String tag, [dynamic payload]) {
+    if (!production) {
+      print('\n* $tag ***************\n');
+      if (payload != null) {
+        print(payload);
+        print('\n**************************\n');
+      }
+    }
+  }
 }

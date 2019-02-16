@@ -1,9 +1,10 @@
 class AuthType {
   AuthType._();
 
-  static const BVN = "BVN";
-  static const PIN = "PIN";
-  static const RANDOM_DEBIT = "RANDOM_DEBIT";
-  static const VBVSECURECODE = "VBVSECURECODE";
-  static const NOAUTH = "NOAUTH";
+  static const BVN = "bvn";
+  static const PIN = "pin";
+  static const USSD = "ussd";
+  static const RANDOM_DEBIT = "random_debit";
+  static const VBVSECURECODE = "vbvsecurecode";
+  static const NOAUTH = "noauth";
 }

@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:ravepay/src/constants/strings.dart';
 import 'package:ravepay/src/models/main.dart';
 import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/utils/log.dart';
 
 typedef T TransformFunction<T>(dynamic data, String status);
 
@@ -42,19 +43,22 @@ class Response<T> extends Model {
   }) {
     try {
       final dynamic responseJson = json.decode(_response.body);
-      status = _response.statusCode < 300
-          ? (responseJson != null &&
-                  responseJson is Map &&
-                  responseJson.containsKey("status")
+      status = responseJson != null
+          ? (responseJson is Map && responseJson.containsKey("status")
               ? responseJson["status"]
-              : 'success')
-          : "empty";
+              : _response.statusCode < 300 ? 'success' : 'error')
+          : 'empty';
       message = responseJson != null &&
               responseJson is Map &&
               responseJson.containsKey("message") &&
               responseJson["message"] != null
           ? responseJson["message"]
           : !Rave().production ? _response.reasonPhrase : Strings.errorMessage;
+
+      if (_response.statusCode >= 300) {
+        throw ResponseException(status, message);
+      }
+
       rawData = _response.statusCode < 300
           ? (responseJson != null &&
                   responseJson is Map &&
@@ -62,12 +66,18 @@ class Response<T> extends Model {
               ? responseJson["data"]
               : responseJson)
           : null;
+    } on ResponseException catch (e) {
+      status = e.status;
+      message = e.message;
+      rawData = null;
+      Log().error('ResponseException', e);
     } catch (e) {
       status = "empty";
       message = _response.statusCode == 502 && Rave().production
           ? Strings.errorMessage
           : e.toString();
       rawData = null;
+      Log().error('Response.catch', e);
     }
 
     if (onTransform != null) {

@@ -1,6 +1,8 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/constants/auth.dart';
 import 'package:ravepay/src/constants/countries.dart';
 import 'package:ravepay/src/constants/currencies.dart';
+import 'package:ravepay/src/constants/payment.dart';
 import 'package:ravepay/src/encryption.dart';
 import 'package:ravepay/src/models/meta.dart';
 import 'package:ravepay/src/models/response.dart';
@@ -26,6 +28,7 @@ class Charge {
     @required String email,
     @required String firstname,
     @required String lastname,
+    @required String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
@@ -38,7 +41,6 @@ class Charge {
     List<Meta> meta,
     String pin,
     String bvn,
-    String redirectUrl,
     String chargeType,
     String deviceFingerprint,
     String recurringStop,
@@ -52,6 +54,7 @@ class Charge {
     assert(email != null);
     assert(firstname != null);
     assert(lastname != null);
+    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -92,13 +95,13 @@ class Charge {
     @required String cvv,
     @required String expiryyear,
     @required String expirymonth,
+    @required String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
     String paymentType,
     List<Meta> meta,
     String iP,
-    String redirectUrl,
     String chargeType,
     bool includeIntegrityHash,
   }) {
@@ -111,6 +114,7 @@ class Charge {
     assert(cvv != null);
     assert(expiryyear != null);
     assert(expirymonth != null);
+    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -130,7 +134,7 @@ class Charge {
         ..add(Keys.IP, iP)
         ..add(Keys.RedirectUrl, redirectUrl)
         ..add(Keys.ChargeType, chargeType)
-        // ..add(Keys.SuggestedAuth, AuthType.PIN)
+        ..add(Keys.SuggestedAuth, AuthType.PIN)
         ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
     );
   }
@@ -142,6 +146,7 @@ class Charge {
     @required String accountnumber,
     @required String firstname,
     @required String lastname,
+    @required String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String iP,
@@ -167,6 +172,7 @@ class Charge {
     assert(email != null);
     assert(firstname != null);
     assert(lastname != null);
+    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
@@ -190,7 +196,9 @@ class Charge {
         ..add(Keys.RecurringStop, recurringStop)
         ..add(Keys.Accountbank, accountbank)
         ..add(Keys.Accountnumber, accountnumber)
-        ..add(Keys.Payment_Type, paymentType ?? 'account')
+        ..add(Keys.RedirectUrl, redirectUrl)
+        ..add(Keys.SuggestedAuth, AuthType.PIN)
+        ..add(Keys.Payment_Type, paymentType ?? PaymentType.ACCOUNT)
         ..add(Keys.IsInternetBanking, isInternetBanking)
         ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
     );
@@ -203,12 +211,14 @@ class Charge {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String chargeType,
     @required String firstname,
     @required String lastname,
+    @required String pin,
+    @required String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
+    String chargeType,
     String iP,
     String suggestedAuth,
     String settlementToken,
@@ -216,7 +226,6 @@ class Charge {
     String billingzip,
     String narration,
     List<Meta> meta,
-    String pin,
     String bvn,
     String deviceFingerprint,
     String recurringStop,
@@ -228,14 +237,15 @@ class Charge {
     assert(expiryyear != null);
     assert(expirymonth != null);
     assert(email != null);
-    assert(chargeType != null);
     assert(firstname != null);
     assert(lastname != null);
+    assert(pin != null);
+    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
         ..add(Keys.Currency, currency)
-        ..add(Keys.SuggestedAuth, suggestedAuth)
+        ..add(Keys.SuggestedAuth, suggestedAuth ?? AuthType.PIN)
         ..add(Keys.Country, country)
         ..add(Keys.SettlementToken, settlementToken)
         ..add(Keys.Cvv, cvv)
@@ -253,7 +263,8 @@ class Charge {
         ..add(Keys.Meta, meta)
         ..add(Keys.Pin, pin)
         ..add(Keys.Bvn, bvn)
-        ..add(Keys.ChargeType, chargeType)
+        ..add(Keys.RedirectUrl, redirectUrl)
+        ..add(Keys.ChargeType, chargeType ?? "preauth")
         ..add(Keys.DeviceFingerprint, deviceFingerprint)
         ..add(Keys.RecurringStop, recurringStop)
         ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
@@ -268,6 +279,7 @@ class Charge {
     @required String accountnumber,
     @required String firstname,
     @required String lastname,
+    @required String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
@@ -284,6 +296,7 @@ class Charge {
     assert(phonenumber != null);
     assert(firstname != null);
     assert(lastname != null);
+    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
@@ -300,9 +313,10 @@ class Charge {
         ..add(Keys.DeviceFingerprint, deviceFingerprint)
         ..add(Keys.Accountbank, accountbank)
         ..add(Keys.Accountnumber, accountnumber)
-        ..add(Keys.IsUssd, "ussd")
+        ..add(Keys.IsUssd, AuthType.USSD)
+        ..add(Keys.RedirectUrl, redirectUrl)
         ..add(Keys.OrderRef, DateTime.now().millisecondsSinceEpoch)
-        ..add(Keys.Payment_Type, "account")
+        ..add(Keys.Payment_Type, PaymentType.ACCOUNT)
         ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
     );
   }
