@@ -5,17 +5,17 @@
   "version": "0.2.0",
   "configurations": [{
     "name": "Charge",
-    "program": "${workspaceFolder}/lib/charge.dart",
+    "program": "${workspaceFolder}/example/charge.dart",
     "request": "launch",
     "type": "dart"
   }, {
     "name": "Banks",
-    "program": "${workspaceFolder}/lib/banks.dart",
+    "program": "${workspaceFolder}/example/banks.dart",
     "request": "launch",
     "type": "dart"
   }, {
     "name": "PreAuth",
-    "program": "${workspaceFolder}/lib/preauth.dart",
+    "program": "${workspaceFolder}/example/preauth.dart",
     "request": "launch",
     "type": "dart"
   }]

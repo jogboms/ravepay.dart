@@ -1,5 +1,6 @@
-import 'package:example_app/_constants.dart';
 import 'package:ravepay/ravepay.dart';
+
+import '../test/_constants.dart';
 
 // TODO
 void card() async {

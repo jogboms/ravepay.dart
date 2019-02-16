@@ -1,5 +1,7 @@
-import 'package:example_app/_constants.dart';
+// import 'package:example_app/_constants.dart';
 import 'package:ravepay/ravepay.dart';
+
+import '../test/_constants.dart';
 
 void fetch() async {
   await Banks().fetch();
