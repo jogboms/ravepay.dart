@@ -18,6 +18,19 @@ void main() {
       test('-> publicKey', () => expect(Rave().publicKey, PUBK));
       test('-> secretKey', () => expect(Rave().secretKey, SECK));
       test('-> baseUrl', () => expect(Rave().baseUrl, Rave.PROD_BASE_UI));
+      test('-> Single Instance', () => expect(Rave(), same(Rave())));
+      test('-> toString', () {
+        final string = Rave().toString();
+        final production = Rave().production;
+        final publicKey = Rave().publicKey;
+        final secretKey = Rave().secretKey;
+        final baseUrl = Rave().baseUrl;
+
+        expect(
+          string,
+          'Rave(publicKey: $publicKey, secretKey: $secretKey, production: $production, baseUrl: $baseUrl)',
+        );
+      });
     });
 
     group('-> BaseUrl', () {

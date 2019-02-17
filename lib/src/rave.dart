@@ -12,10 +12,7 @@ class Rave {
     @required this.publicKey,
     @required this.secretKey,
     @required this.production,
-  })  : assert(publicKey != null),
-        assert(secretKey != null),
-        assert(production != null),
-        baseUrl = production ? PROD_BASE_UI : STAGING_BASE_UI;
+  }) : baseUrl = production ? PROD_BASE_UI : STAGING_BASE_UI;
 
   @visibleForTesting
   static void reset() {
@@ -27,6 +24,9 @@ class Rave {
     @required String secretKey,
     @required bool production,
   }) {
+    assert(publicKey != null);
+    assert(secretKey != null);
+    assert(production != null);
     assert(_instance == null,
         'Are you trying to reset the previous keys by calling Rave.init() again?.');
     _instance = Rave._(

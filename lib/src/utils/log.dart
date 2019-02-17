@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 class Log {
   factory Log() => _instance;
 
@@ -9,23 +11,29 @@ class Log {
 
   final bool production;
 
-  void debug(String tag, [dynamic payload]) {
-    if (!production) {
-      print('\n= $tag ===============\n');
-      if (payload != null) {
-        print(payload);
-        print('\n==========================\n');
-      }
-    }
+  String debug(String tag, [dynamic payload]) {
+    final output = generator('=', tag, payload);
+    print(output);
+    return output;
   }
 
-  void error(String tag, [dynamic payload]) {
+  String error(String tag, [dynamic payload]) {
+    final output = generator('*', tag, payload);
+    print(output);
+    return output;
+  }
+
+  @visibleForTesting
+  String generator(String delim, String tag, [dynamic payload]) {
+    String _ = '';
     if (!production) {
-      print('\n* $tag ***************\n');
+      final _d = delim.padRight(20, delim);
+      _ += '\n$delim $tag $_d\n';
       if (payload != null) {
-        print(payload);
-        print('\n**************************\n');
+        _ += '$payload \n$_d\n';
       }
     }
+
+    return _;
   }
 }
