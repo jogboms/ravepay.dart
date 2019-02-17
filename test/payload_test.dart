@@ -7,7 +7,9 @@ import '_constants.dart';
 const String Key = 'Hey';
 
 void main() {
-  Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
+  setUp(() => Rave.init(production: true, publicKey: PUBK, secretKey: SECK));
+
+  tearDown(() => Rave.reset());
 
   group('Payload', () {
     test('-> empty length', () {

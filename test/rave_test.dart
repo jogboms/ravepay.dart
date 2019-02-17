@@ -7,7 +7,12 @@ import '_utils.dart';
 void main() {
   group('Rave', () {
     group('-> Truthy', () {
-      Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
+      setUp(
+        () {
+          Rave.reset();
+          Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
+        },
+      );
 
       test('-> production', () => expect(Rave().production, true));
       test('-> publicKey', () => expect(Rave().publicKey, PUBK));

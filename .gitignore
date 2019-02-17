@@ -5,6 +5,8 @@
 build/
 packages
 pubspec.lock
+test/.test_coverage.dart
+coverage/
 
 # Directory created by dartdoc
 doc/api/
