@@ -11,7 +11,7 @@ dart_task:
   - test
   - dartanalyzer
 
-scripts:
+script:
   - pub get
   - pub run test_coverage
 
