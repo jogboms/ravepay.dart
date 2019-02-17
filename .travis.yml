@@ -12,7 +12,6 @@ dart_task:
   - dartanalyzer
 
 script:
-  - pub get
   - pub run test_coverage
 
 after_success:
