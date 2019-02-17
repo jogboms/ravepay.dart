@@ -6,8 +6,6 @@ import 'package:ravepay/src/rave.dart';
 typedef dynamic PayloadBuilder(Map<String, dynamic> params);
 
 class Keys {
-  Keys._();
-
   static const String PublicKey = "PBFPubKey";
   static const String Currency = "currency";
   static const String Country = "country";
@@ -75,6 +73,12 @@ class Payload {
   dynamic remove(String key) => toMap().remove(key);
 
   dynamic getItem(String key) => containsKey(key) == true ? toMap()[key] : null;
+
+  @visibleForTesting
+  dynamic clear() {
+    _hashMap.clear();
+    return this;
+  }
 
   @visibleForTesting
   int get length => toMap().length;

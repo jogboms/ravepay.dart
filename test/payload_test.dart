@@ -84,5 +84,13 @@ void main() {
 
       expect(truthy, isFalse);
     });
+    test('-> clear length', () {
+      expect(Payload().clear().length, isZero);
+    });
+    test('-> toString', () {
+      final string = Payload().clear().add(Keys.TxRef, Keys.TxRef).toString();
+
+      expect(string, '{"${Keys.TxRef}":"${Keys.TxRef}"}');
+    });
   });
 }
