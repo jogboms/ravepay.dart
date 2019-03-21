@@ -1,4 +1,5 @@
 import 'dart:convert' show json;
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:ravepay/src/constants/strings.dart';
@@ -8,38 +9,47 @@ import 'package:ravepay/src/utils/log.dart';
 
 typedef T TransformFunction<T>(dynamic data, String status);
 
-class ForbiddenException implements Exception {
-  ForbiddenException([this.message]);
-
-  final String message;
-
-  @override
-  String toString() => this.message;
+class ForbiddenException extends ResponseException {
+  ForbiddenException(String status, [String message])
+      : super(HttpStatus.forbidden, status, message);
 }
 
-class NotAuthorisedException implements Exception {
-  NotAuthorisedException([this.message]);
+class TimeOutException extends ResponseException {
+  TimeOutException()
+      : super(
+            HttpStatus.requestTimeout, 'UNKNOWN', Strings.timeoutErrorMessage);
+}
 
-  final String message;
+class BadRequestException extends ResponseException {
+  BadRequestException(String status, [String message])
+      : super(HttpStatus.badRequest, status, message);
+}
 
-  @override
-  String toString() => this.message;
+class NotAuthorisedException extends ResponseException {
+  NotAuthorisedException(String status, [String message])
+      : super(HttpStatus.unauthorized, status, message);
 }
 
 class ResponseException implements Exception {
-  ResponseException([this.status, this.message]);
+  ResponseException(
+    this.statusCode,
+    this.status, [
+    this.message,
+  ]);
 
+  final int statusCode;
   final String status;
   final String message;
 
   @override
-  String toString() => 'ResponseException(${this.status}, ${this.message})';
+  String toString() => '$runtimeType($statusCode, $status, $message)';
 }
 
 class Response<T> extends Model {
   Response(
     this._response, {
     TransformFunction<T> onTransform,
+    bool showThrow = true,
   }) {
     try {
       final dynamic responseJson = json.decode(_response.body);
@@ -47,7 +57,7 @@ class Response<T> extends Model {
           ? (responseJson is Map && responseJson.containsKey("status")
               ? responseJson["status"]
               : _response.statusCode < 300 ? 'success' : 'error')
-          : 'empty';
+          : 'UNKNOWN';
       message = responseJson != null &&
               responseJson is Map &&
               responseJson.containsKey("message") &&
@@ -56,7 +66,7 @@ class Response<T> extends Model {
           : !Rave().production ? _response.reasonPhrase : Strings.errorMessage;
 
       if (_response.statusCode >= 300) {
-        throw ResponseException(status, message);
+        throw ResponseException(_response.statusCode, status, message);
       }
 
       rawData = _response.statusCode < 300
@@ -72,12 +82,37 @@ class Response<T> extends Model {
       rawData = null;
       Log().error('ResponseException', e);
     } catch (e) {
-      status = "empty";
+      status = "UNKNOWN";
       message = _response.statusCode == 502 && Rave().production
           ? Strings.errorMessage
           : e.toString();
       rawData = null;
       Log().error('Response.catch', e);
+      if (showThrow) {
+        throw ResponseException(_response.statusCode, status, message);
+      }
+    }
+
+    if (showThrow) {
+      if (isForbidden) {
+        throw ForbiddenException(status, message);
+      }
+
+      if (isNotAuthorized) {
+        throw NotAuthorisedException(status, message);
+      }
+
+      if (isBadRequest) {
+        throw BadRequestException(status, message);
+      }
+
+      if (isNotOk) {
+        throw ResponseException(
+          _response.statusCode,
+          status,
+          message,
+        );
+      }
     }
 
     if (onTransform != null) {
