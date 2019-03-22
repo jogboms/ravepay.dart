@@ -10,29 +10,29 @@ class Validate {
   final HttpWrapper _http;
 
   Future<http.Response> card({
-    @required String txRef,
+    @required String flwRef,
     @required String otp,
   }) {
-    assert(txRef != null);
+    assert(flwRef != null);
     return _http.post(
       Endpoints.validateCardCharge,
       <String, dynamic>{
         'PBFPubKey': Rave().publicKey,
-        'transaction_reference': txRef,
+        'transaction_reference': flwRef,
         'otp': otp,
       },
     );
   }
 
   Future<http.Response> account({
-    @required String txRef,
+    @required String flwRef,
     @required String otp,
   }) {
     return _http.post(
       Endpoints.validateAccountCharge,
       <String, dynamic>{
         'PBFPubKey': Rave().publicKey,
-        'transactionreference': txRef,
+        'transactionreference': flwRef,
         'otp': otp,
       },
     );
