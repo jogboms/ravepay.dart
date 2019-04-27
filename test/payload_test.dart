@@ -1,4 +1,4 @@
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/payload.dart';
 import 'package:test/test.dart';
 
@@ -7,9 +7,9 @@ import '_constants.dart';
 const String Key = 'Hey';
 
 void main() {
-  setUp(() => Rave.init(production: true, publicKey: PUBK, secretKey: SECK));
+  setUp(() => Ravepay.init(production: true, publicKey: PUBK, secretKey: SECK));
 
-  tearDown(() => Rave.reset());
+  tearDown(() => Ravepay.reset());
 
   group('Payload', () {
     test('-> empty length', () {

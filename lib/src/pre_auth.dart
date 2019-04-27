@@ -5,7 +5,7 @@ import 'package:ravepay/src/constants/currencies.dart';
 import 'package:ravepay/src/models/meta.dart';
 import 'package:ravepay/src/models/response.dart';
 import 'package:ravepay/src/models/result.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
@@ -85,7 +85,7 @@ class PreAuth {
     final _res = await _http.post(
       Endpoints.refundOrVoidPreauthorization,
       <String, dynamic>{
-        'SECKEY': Rave().secretKey,
+        'SECKEY': Ravepay().secretKey,
         'ref': flwRef,
         'action': action,
       },
@@ -118,7 +118,7 @@ class PreAuth {
     final _res = await _http.post(
       Endpoints.capturePreauthorizeCard,
       <String, dynamic>{
-        'SECKEY': Rave().secretKey,
+        'SECKEY': Ravepay().secretKey,
         'flwRef': flwRef,
         'amount': amount,
       },

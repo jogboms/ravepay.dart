@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 
@@ -20,7 +20,7 @@ class Fees {
     return _http.post(
       Endpoints.getFees,
       <String, dynamic>{
-        'PBFPubKey': Rave().publicKey,
+        'PBFPubKey': Ravepay().publicKey,
         'amount': amount,
         'currency': currency,
         'card6': card6,
@@ -38,7 +38,7 @@ class Fees {
     return _http.post(
       Endpoints.getFees,
       <String, dynamic>{
-        'PBFPubKey': Rave().publicKey,
+        'PBFPubKey': Ravepay().publicKey,
         'amount': amount,
         'currency': currency,
         'ptype': ptype ?? 2

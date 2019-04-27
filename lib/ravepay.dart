@@ -14,7 +14,7 @@ export './src/models/meta.dart';
 export './src/models/response.dart';
 export './src/models/result.dart';
 export './src/pre_auth.dart';
-export './src/rave.dart';
+export './src/ravepay.dart';
 export './src/sub_account.dart';
 export './src/subscription.dart';
 export './src/tokenize.dart';

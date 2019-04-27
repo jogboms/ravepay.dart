@@ -7,7 +7,7 @@ import 'package:ravepay/src/encryption.dart';
 import 'package:ravepay/src/models/meta.dart';
 import 'package:ravepay/src/models/response.dart';
 import 'package:ravepay/src/models/result.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
@@ -323,7 +323,7 @@ class Charge {
 
   final HttpWrapper _http;
   final Payload payload;
-  static final _encryption = Encryption(secretKey: Rave().secretKey);
+  static final _encryption = Encryption(secretKey: Ravepay().secretKey);
 
   Future<Response<Result>> charge() async {
     if (payload.getItem(Keys.IncludeIntegrityHash) == true) {
@@ -342,7 +342,7 @@ class Charge {
     final _res = await _http.post(
       Endpoints.directCharge,
       <String, dynamic>{
-        "PBFPubKey": Rave().publicKey,
+        "PBFPubKey": Ravepay().publicKey,
         "client": _encryption.encrypt(payload.toMap()),
         "alg": Encryption.ALGORITHM,
       },

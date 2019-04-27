@@ -3,11 +3,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:ravepay/src/models/response.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/log.dart';
 
 class HttpWrapper {
-  HttpWrapper() : baseUrl = Rave().baseUrl;
+  HttpWrapper() : baseUrl = Ravepay().baseUrl;
 
   static final Map<String, String> _headers = {
     'Accept': 'application/json',

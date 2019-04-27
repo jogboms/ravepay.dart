@@ -1,4 +1,4 @@
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:test/test.dart';
 
 import '_constants.dart';
@@ -9,22 +9,22 @@ void main() {
     group('-> Truthy', () {
       setUp(
         () {
-          Rave.reset();
-          Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
+          Ravepay.reset();
+          Ravepay.init(production: true, publicKey: PUBK, secretKey: SECK);
         },
       );
 
-      test('-> production', () => expect(Rave().production, true));
-      test('-> publicKey', () => expect(Rave().publicKey, PUBK));
-      test('-> secretKey', () => expect(Rave().secretKey, SECK));
-      test('-> baseUrl', () => expect(Rave().baseUrl, Rave.PROD_BASE_UI));
-      test('-> Single Instance', () => expect(Rave(), same(Rave())));
+      test('-> production', () => expect(Ravepay().production, true));
+      test('-> publicKey', () => expect(Ravepay().publicKey, PUBK));
+      test('-> secretKey', () => expect(Ravepay().secretKey, SECK));
+      test('-> baseUrl', () => expect(Ravepay().baseUrl, Ravepay.PROD_BASE_UI));
+      test('-> Single Instance', () => expect(Ravepay(), same(Ravepay())));
       test('-> toString', () {
-        final string = Rave().toString();
-        final production = Rave().production;
-        final publicKey = Rave().publicKey;
-        final secretKey = Rave().secretKey;
-        final baseUrl = Rave().baseUrl;
+        final string = Ravepay().toString();
+        final production = Ravepay().production;
+        final publicKey = Ravepay().publicKey;
+        final secretKey = Ravepay().secretKey;
+        final baseUrl = Ravepay().baseUrl;
 
         expect(
           string,
@@ -35,28 +35,28 @@ void main() {
 
     group('-> BaseUrl', () {
       test('-> production', () {
-        Rave.reset();
-        Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
-        expect(Rave().baseUrl, Rave.PROD_BASE_UI);
+        Ravepay.reset();
+        Ravepay.init(production: true, publicKey: PUBK, secretKey: SECK);
+        expect(Ravepay().baseUrl, Ravepay.PROD_BASE_UI);
       });
       test('-> staging', () {
-        Rave.reset();
-        Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
-        expect(Rave().baseUrl, Rave.STAGING_BASE_UI);
+        Ravepay.reset();
+        Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
+        expect(Ravepay().baseUrl, Ravepay.STAGING_BASE_UI);
       });
     });
 
     group('-> Assertions', () {
       test('-> No init/reset', () {
-        Rave.reset();
-        expect(() => Rave().secretKey, throwsAssertionError);
+        Ravepay.reset();
+        expect(() => Ravepay().secretKey, throwsAssertionError);
       });
 
       test('-> Multiple init', () {
         expect(
           () {
-            Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
-            Rave.init(production: true, publicKey: PUBK, secretKey: SECK);
+            Ravepay.init(production: true, publicKey: PUBK, secretKey: SECK);
+            Ravepay.init(production: true, publicKey: PUBK, secretKey: SECK);
           },
           throwsAssertionError,
         );
@@ -64,19 +64,19 @@ void main() {
 
       test('-> production = null', () {
         expect(
-          () => Rave.init(production: null, publicKey: PUBK, secretKey: SECK),
+          () => Ravepay.init(production: null, publicKey: PUBK, secretKey: SECK),
           throwsAssertionError,
         );
       });
       test('-> publicKey = null', () {
         expect(
-          () => Rave.init(production: true, publicKey: null, secretKey: SECK),
+          () => Ravepay.init(production: true, publicKey: null, secretKey: SECK),
           throwsAssertionError,
         );
       });
       test('-> secretKey = null', () {
         expect(
-          () => Rave.init(production: true, publicKey: PUBK, secretKey: null),
+          () => Ravepay.init(production: true, publicKey: PUBK, secretKey: null),
           throwsAssertionError,
         );
       });

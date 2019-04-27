@@ -8,7 +8,7 @@ void fetch() async {
 }
 
 void main() async {
-  Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
+  Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
 
   fetch();
 }

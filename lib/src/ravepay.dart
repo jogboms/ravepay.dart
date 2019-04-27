@@ -1,14 +1,14 @@
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/utils/log.dart';
 
-class Rave {
-  factory Rave() {
+class Ravepay {
+  factory Ravepay() {
     assert(_instance != null,
-        'Please make sure to call Rave.init() at the top of your app or before using the other functions.');
+        'Please make sure to call Ravepay.init() at the top of your app or before using the other functions.');
     return _instance;
   }
 
-  Rave._({
+  Ravepay._({
     @required this.publicKey,
     @required this.secretKey,
     @required this.production,
@@ -28,8 +28,8 @@ class Rave {
     assert(secretKey != null);
     assert(production != null);
     assert(_instance == null,
-        'Are you trying to reset the previous keys by calling Rave.init() again?.');
-    _instance = Rave._(
+        'Are you trying to reset the previous keys by calling Ravepay.init() again?.');
+    _instance = Ravepay._(
       publicKey: publicKey,
       secretKey: secretKey,
       production: production,
@@ -38,7 +38,7 @@ class Rave {
     Log.init(production);
   }
 
-  static Rave _instance;
+  static Ravepay _instance;
   static const PROD_BASE_UI = "https://api.ravepay.co/";
   static const STAGING_BASE_UI = "https://ravesandboxapi.flutterwave.com/";
 

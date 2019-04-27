@@ -78,7 +78,7 @@ Future<Response<Result>> ussd() async {
 }
 
 void main() async {
-  Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
+  Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
 
   await card();
   await pin();
