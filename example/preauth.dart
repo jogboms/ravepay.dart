@@ -1,6 +1,6 @@
 import 'package:ravepay/ravepay.dart';
 
-import '../test/_constants.dart';
+import '_keys.dart';
 
 void preauth() async {
   await PreAuth().preauth(

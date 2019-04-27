@@ -1,6 +1,6 @@
 import 'package:ravepay/ravepay.dart';
 
-import '../test/_constants.dart';
+import '_keys.dart';
 
 // TODO
 Future<Response<Result>> card() async {

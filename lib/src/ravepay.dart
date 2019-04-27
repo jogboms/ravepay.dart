@@ -12,7 +12,7 @@ class Ravepay {
     @required this.publicKey,
     @required this.secretKey,
     @required this.production,
-  }) : baseUrl = production ? PROD_BASE_UI : STAGING_BASE_UI;
+  }) : baseUrl = production ? PROD_BASE_URI : STAGING_BASE_URI;
 
   @visibleForTesting
   static void reset() {
@@ -39,8 +39,8 @@ class Ravepay {
   }
 
   static Ravepay _instance;
-  static const PROD_BASE_UI = "https://api.ravepay.co/";
-  static const STAGING_BASE_UI = "https://ravesandboxapi.flutterwave.com/";
+  static const PROD_BASE_URI = "https://api.ravepay.co/";
+  static const STAGING_BASE_URI = "https://ravesandboxapi.flutterwave.com/";
 
   final String publicKey;
   final String secretKey;
@@ -49,6 +49,6 @@ class Ravepay {
 
   @override
   String toString() {
-    return 'Rave(publicKey: $publicKey, secretKey: $secretKey, production: $production, baseUrl: $baseUrl)';
+    return '$runtimeType(publicKey: $publicKey, secretKey: $secretKey, production: $production, baseUrl: $baseUrl)';
   }
 }

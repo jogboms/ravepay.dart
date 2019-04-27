@@ -1,7 +1,7 @@
-// const PUBK = "FLWPUBK-e634d14d9ded04eaf05d5b63a0a06d2f-X";
-const PUBK = "FLWPUBK_TEST-34cbec1ade7fe6b2eb65985474b4070c-X";
-// const SECK = "FLWSECK-bb971402072265fb156e90a3578fe5e6-X";
-const SECK = "FLWSECK_TEST-5e993296191ed3e1cd0703554f25c1d5-X";
+const PROD_BASE_URI = "https://api.ravepay.co/";
+const STAGING_BASE_URI = "https://ravesandboxapi.flutterwave.com/";
+const PUBK_TEST = "FLWPUBK-e634d14d9ded04eaf05d5b63a0a06d2f-X";
+const SECK_TEST = "FLWSECK-bb971402072265fb156e90a3578fe5e6-X";
 const RAW_DATA = <String, int>{"a": 1, "b": 2, "c": 3};
 const ENCRYPTED_DATA = 'Z6L8BhZ9rcTku0YJiaYa6+eyH0yAEaar';
 const GENERATED_KEY = 'bb9714020722eb4cf7a169f2';

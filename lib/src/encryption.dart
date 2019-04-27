@@ -11,8 +11,10 @@ class Encryption {
   }) : assert(secretKey != null);
 
   static const String ALGORITHM = "3DES-24";
-  static const String _TARGET = "FLWSECK-";
-  static const int _SUB_STRING_LENGTH = 12;
+  @visibleForTesting
+  static const String TARGET = "FLWSECK-";
+  @visibleForTesting
+  static const int SUB_STRING_LENGTH = 12;
 
   final String secretKey;
 
@@ -50,11 +52,11 @@ class Encryption {
     );
 
     final String _uniqueHash = _hash.substring(
-      _hash.length - _SUB_STRING_LENGTH,
+      _hash.length - SUB_STRING_LENGTH,
       _hash.length,
     );
 
-    return seckey.replaceAll(_TARGET, '').substring(0, _SUB_STRING_LENGTH) +
+    return seckey.replaceAll(TARGET, '').substring(0, SUB_STRING_LENGTH) +
         _uniqueHash;
   }
 }

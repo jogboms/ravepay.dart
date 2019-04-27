@@ -7,7 +7,8 @@ import '_constants.dart';
 const String Key = 'Hey';
 
 void main() {
-  setUp(() => Ravepay.init(production: true, publicKey: PUBK, secretKey: SECK));
+  setUp(() => Ravepay.init(
+      production: true, publicKey: PUBK_TEST, secretKey: SECK_TEST));
 
   tearDown(() => Ravepay.reset());
 

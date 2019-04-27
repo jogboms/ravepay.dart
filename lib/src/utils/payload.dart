@@ -52,13 +52,14 @@ class Payload {
     add(Keys.TxRef, 'txref-${DateTime.now().millisecondsSinceEpoch}');
   }
 
-  final Map<String, dynamic> _hashMap = <String, dynamic>{};
+  @visibleForTesting
+  final Map<String, dynamic> hashMap = <String, dynamic>{};
 
   Payload add(String key, dynamic value) {
     if (value != null) {
-      _hashMap.containsKey(key)
-          ? _hashMap[key] = value
-          : _hashMap.putIfAbsent(key, () => value);
+      hashMap.containsKey(key)
+          ? hashMap[key] = value
+          : hashMap.putIfAbsent(key, () => value);
     }
     return this;
   }
@@ -66,7 +67,7 @@ class Payload {
   void addBuilder(String key, PayloadBuilder builder) =>
       add(key, builder(toMap()));
 
-  Map<String, dynamic> toMap() => _hashMap;
+  Map<String, dynamic> toMap() => hashMap;
 
   bool containsKey(String key) => toMap().containsKey(key);
 
@@ -76,7 +77,7 @@ class Payload {
 
   @visibleForTesting
   dynamic clear() {
-    _hashMap.clear();
+    hashMap.clear();
     return this;
   }
 
