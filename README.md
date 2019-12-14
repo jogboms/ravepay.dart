@@ -1,12 +1,12 @@
 # 💳 RavePay Dart SDK
 
-[![Build Status - Travis](https://travis-ci.org/jogboms/ravepay.dart.svg?branch=master)](https://travis-ci.org/jogboms/ravepay.dart) [![codecov](https://codecov.io/gh/jogboms/ravepay.dart/branch/master/graph/badge.svg)](https://codecov.io/gh/jogboms/ravepay.dart)
+[![Build Status - Travis](https://travis-ci.org/jogboms/ravepay.dart.svg?branch=master)](https://travis-ci.org/jogboms/ravepay.dart) [![codecov](https://codecov.io/gh/jogboms/ravepay.dart/branch/master/graph/badge.svg)](https://codecov.io/gh/jogboms/ravepay.dart) [![pub package](https://img.shields.io/pub/v/ravepay.svg)](https://pub.dartlang.org/packages/ravepay)
 
 ## Installing
 
 ```yaml
 dependencies:
-  ravepay: "^0.0.1+1"
+  ravepay: "^0.0.1+2"
 ```
 
 ## Import
