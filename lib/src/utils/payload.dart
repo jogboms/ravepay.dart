@@ -1,10 +1,10 @@
 import 'dart:convert' show json;
 
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/constants/keys.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/keys.dart';
 
-typedef dynamic PayloadBuilder(Map<String, dynamic> params);
+typedef PayloadBuilder = dynamic Function(Map<String, dynamic> params);
 
 class Payload {
   Payload() {
@@ -17,15 +17,12 @@ class Payload {
 
   Payload add(String key, dynamic value) {
     if (value != null) {
-      hashMap.containsKey(key)
-          ? hashMap[key] = value
-          : hashMap.putIfAbsent(key, () => value);
+      hashMap.containsKey(key) ? hashMap[key] = value : hashMap.putIfAbsent(key, () => value);
     }
     return this;
   }
 
-  void addBuilder(String key, PayloadBuilder builder) =>
-      add(key, builder(toMap()));
+  void addBuilder(String key, PayloadBuilder builder) => add(key, builder(toMap()));
 
   Map<String, dynamic> toMap() => hashMap;
 

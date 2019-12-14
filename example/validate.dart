@@ -1,26 +1,38 @@
 import 'package:ravepay/ravepay.dart';
 
-import '_keys.dart';
+import '_bootstrap.dart';
 import 'charge.dart' as charge;
 
-void card() async {
+Future<Response<ValidateResult>> card() async {
   final response = await charge.pin();
-  await Validate().card(
+  final resp = await Validate().charge(
+    authModelUsed: response.data.authModelUsed,
     otp: '12345',
     flwRef: response.data.flwRef,
+    authUrl: response.data.authurl,
   );
+  print('isSuccessful:--> ${resp.data.isSuccessful}');
+  return resp;
 }
 
-void account() async {
+Future<Response<ValidateResult>> account() async {
   final response = await charge.account();
-  await Validate().account(
+  final resp = await Validate().charge(
+    authModelUsed: response.data.authModelUsed,
     otp: '12345',
     flwRef: response.data.flwRef,
+    authUrl: response.data.authurl,
   );
+  return resp;
 }
 
 void main() async {
-  Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
+  init();
 
-  card();
+  try {
+    await card();
+    // await account();
+  } catch (e) {
+    print(e);
+  }
 }

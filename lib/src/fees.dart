@@ -1,48 +1,69 @@
-import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
+import 'package:ravepay/src/utils/log.dart';
+import 'package:ravepay/src/utils/response.dart';
 
 class Fees {
   Fees() : _http = HttpWrapper();
 
   final HttpWrapper _http;
 
-  Future<http.Response> card({
+  // TODO
+  Future<Response<dynamic>> card({
     @required String amount,
     @required String currency,
     @required String card6,
-  }) {
+  }) async {
     assert(amount != null);
     assert(currency != null);
     assert(card6 != null);
-    return _http.post(
-      Endpoints.getFees,
-      <String, dynamic>{
-        'PBFPubKey': Ravepay().publicKey,
-        'amount': amount,
-        'currency': currency,
-        'card6': card6,
-      },
+
+    final payload = <String, dynamic>{
+      'PBFPubKey': Ravepay().publicKey,
+      'amount': amount,
+      'currency': currency,
+      'card6': card6,
+    };
+
+    Log().debug('$runtimeType.card()', payload);
+
+    final _response = Response<dynamic>(
+      await _http.post(Endpoints.getFees, payload),
+      onTransform: (dynamic data, _) => data,
     );
+
+    Log().debug('$runtimeType.card() -> Response', _response);
+
+    return _response;
   }
 
-  Future<http.Response> account({
+  // TODO
+  Future<Response<dynamic>> account({
     @required String amount,
     @required String currency,
     int ptype,
-  }) {
+  }) async {
     assert(amount != null);
     assert(currency != null);
-    return _http.post(
-      Endpoints.getFees,
-      <String, dynamic>{
-        'PBFPubKey': Ravepay().publicKey,
-        'amount': amount,
-        'currency': currency,
-        'ptype': ptype ?? 2
-      },
+
+    final payload = <String, dynamic>{
+      'PBFPubKey': Ravepay().publicKey,
+      'amount': amount,
+      'currency': currency,
+      'ptype': ptype ?? 2
+    };
+
+    Log().debug('$runtimeType.account()', payload);
+
+    final _response = Response<dynamic>(
+      await _http.post(Endpoints.getFees, payload),
+      onTransform: (dynamic data, _) => data,
     );
+
+    Log().debug('$runtimeType.account() -> Response', _response);
+
+    return _response;
   }
 }

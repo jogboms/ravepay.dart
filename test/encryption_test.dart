@@ -1,4 +1,4 @@
-import 'package:ravepay/src/encryption.dart';
+import 'package:ravepay/src/utils/encryption.dart';
 import 'package:test/test.dart';
 
 import '_constants.dart';
@@ -7,7 +7,7 @@ import '_utils.dart';
 void main() {
   group('Encyption', () {
     group('-> Truthy', () {
-      const _encryption = const Encryption(secretKey: SECK_TEST);
+      const _encryption = Encryption(secretKey: SECK_TEST);
 
       test('-> generateKey', () {
         expect(_encryption.generateKey(SECK_TEST), GENERATED_KEY);

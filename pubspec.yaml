@@ -11,6 +11,10 @@ dependencies:
   crypto: ^2.1.4
   tripledes: ^2.1.0
   http: ^0.12.0+2
+  built_value: ^6.8.2
+  built_collection: ^4.2.2
+  meta: ^1.1.7
+  convert: ^2.1.1
 
 dev_dependencies:
   test: ^1.9.0
@@ -18,3 +22,5 @@ dev_dependencies:
   test_coverage:
     git:
       url: https://github.com/jogboms/test-coverage.git
+  build_runner: ^1.7.2
+  built_value_generator: ^6.8.2

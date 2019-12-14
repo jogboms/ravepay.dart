@@ -1,46 +1,54 @@
+library card;
+
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:ravepay/src/models/main.dart';
+import 'package:ravepay/src/models/serializers.dart';
 
-class Card extends Model {
-  Card({
-    this.expirymonth,
-    this.expiryyear,
-    this.cardBIN,
-    this.last4digits,
-    this.brand,
-    this.cardTokens,
-    this.lifeTimeToken,
-  });
+part 'card.g.dart';
 
-  Card.fromJson(Map<String, dynamic> json)
-      : expirymonth = json["expirymonth"],
-        expiryyear = json["expiryyear"],
-        cardBIN = json["cardBIN"],
-        last4digits = json["last4digits"],
-        brand = json["brand"],
-        cardTokens = Model.generator<Map<String, dynamic>>(
-          json["card_tokens"],
-          (dynamic token) => Map<String, dynamic>.from(token),
-        ),
-        lifeTimeToken = json["life_time_token"];
+abstract class Card with ModelInterface implements Built<Card, CardBuilder> {
+  Card._();
 
-  final String expirymonth;
-  final String expiryyear;
-  final String cardBIN;
-  final String last4digits;
-  final String brand;
-  final List<Map<String, dynamic>> cardTokens;
-  final String lifeTimeToken;
+  factory Card([void Function(CardBuilder b) updates]) = _$Card;
+
+  String get expirymonth;
+  String get expiryyear;
+  String get cardBIN;
+  String get last4digits;
+  String get brand;
+  @BuiltValueField(wireName: 'card_tokens')
+  BuiltList<CardTokens> get cardTokens;
+  @BuiltValueField(wireName: 'life_time_token')
+  String get lifeTimeToken;
 
   @override
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      "expirymonth": expirymonth,
-      "expiryyear": expiryyear,
-      "cardBIN": cardBIN,
-      "last4digits": last4digits,
-      "brand": brand,
-      "cardTokens": cardTokens,
-      "lifeTimeToken": lifeTimeToken,
-    };
-  }
+  Map<String, dynamic> toMap() => serializers.serializeWith(Card.serializer, this);
+
+  static Card fromJson(Map<String, dynamic> map) => serializers.deserializeWith(Card.serializer, map);
+
+  static Serializer<Card> get serializer => _$cardSerializer;
+}
+
+abstract class CardTokens with ModelInterface implements Built<CardTokens, CardTokensBuilder> {
+  CardTokens._();
+
+  factory CardTokens([void Function(CardTokensBuilder b) updates]) = _$CardTokens;
+
+  @nullable
+  String get embedtoken;
+
+  @nullable
+  String get shortcode;
+
+  @nullable
+  String get expiry;
+
+  @override
+  Map<String, dynamic> toMap() => serializers.serializeWith(CardTokens.serializer, this);
+
+  static CardTokens fromJson(Map<String, dynamic> map) => serializers.deserializeWith(CardTokens.serializer, map);
+
+  static Serializer<CardTokens> get serializer => _$cardTokensSerializer;
 }

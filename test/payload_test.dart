@@ -1,17 +1,16 @@
+import 'package:ravepay/src/constants/keys.dart';
 import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/payload.dart';
 import 'package:test/test.dart';
-import 'package:ravepay/src/utils/keys.dart';
 
 import '_constants.dart';
 
 const String Key = 'Hey';
 
 void main() {
-  setUp(() => Ravepay.init(
-      production: true, publicKey: PUBK_TEST, secretKey: SECK_TEST));
+  setUp(() => Ravepay.init(production: true, publicKey: PUBK_TEST, secretKey: SECK_TEST));
 
-  tearDown(() => Ravepay.reset());
+  tearDown(Ravepay.reset);
 
   group('Payload', () {
     test('-> empty length', () {
@@ -27,11 +26,7 @@ void main() {
       expect(payload.length, 3);
     });
     test('-> add multiple length', () {
-      final payload = Payload()
-        ..add(Key, 20)
-        ..add(Key, 20)
-        ..add(Key, 20)
-        ..add(Key, 20);
+      final payload = Payload()..add(Key, 20)..add(Key, 20)..add(Key, 20)..add(Key, 20);
 
       expect(payload.length, 3);
     });

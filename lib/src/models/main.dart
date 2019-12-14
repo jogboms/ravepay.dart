@@ -1,8 +1,15 @@
 import 'dart:convert' show json;
 
-abstract class Model {
+abstract class ModelInterface {
   Map<String, dynamic> toMap();
 
+  Map<String, dynamic> toJson() => toMap();
+
+  @override
+  String toString() => Model.mapToString(toMap());
+}
+
+abstract class Model implements ModelInterface {
   Model clone() => null;
 
   static int parseInt(dynamic value) {
@@ -21,14 +28,12 @@ abstract class Model {
     }
   }
 
-  static List<T> generator<T>(dynamic items, T Function(dynamic) cb) {
+  static List<T> generator<T, U>(List<U> items, T Function(U) cb) {
     return List<T>.generate(
       items != null ? items.length : 0,
       (int index) => cb(items[index]),
     );
   }
-
-  Map<String, dynamic> toJson() => toMap();
 
   static String mapToString(Map<String, dynamic> map) {
     return json.encode(map);

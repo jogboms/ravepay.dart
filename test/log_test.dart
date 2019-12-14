@@ -23,24 +23,24 @@ void main() {
 
     test('-> Single Instance', () => expect(Log(), same(Log())));
     test('-> generator dev', () {
-      final truthy = Log().generator("=", "Tag").contains("= Tag");
+      final truthy = Log().generator('=', 'Tag').contains('= Tag');
       expect(truthy, isTrue);
     });
     test('-> generator prod', () {
       Log.init(true);
-      final truthy = Log().generator("=", "Tag").isEmpty;
+      final truthy = Log().generator('=', 'Tag').isEmpty;
       expect(truthy, isTrue);
     });
     test('-> generator w/ payload', () {
-      final truthy = Log().generator("=", "Tag", "Payload").contains("Payload");
+      final truthy = Log().generator('=', 'Tag', 'Payload').contains('Payload');
       expect(truthy, isTrue);
     });
     test('-> debug', () {
-      final truthy = Log().debug("Tag").contains("= Tag");
+      final truthy = Log().debug('Tag').contains('= Tag');
       expect(truthy, isTrue);
     });
     test('-> error', () {
-      final truthy = Log().error("Tag").contains("* Tag");
+      final truthy = Log().error('Tag').contains('* Tag');
       expect(truthy, isTrue);
     });
   });

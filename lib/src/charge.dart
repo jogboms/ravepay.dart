@@ -2,17 +2,18 @@ import 'package:meta/meta.dart';
 import 'package:ravepay/src/constants/auth.dart';
 import 'package:ravepay/src/constants/countries.dart';
 import 'package:ravepay/src/constants/currencies.dart';
+import 'package:ravepay/src/constants/endpoints.dart';
+import 'package:ravepay/src/constants/keys.dart';
 import 'package:ravepay/src/constants/payment.dart';
-import 'package:ravepay/src/encryption.dart';
-import 'package:ravepay/src/models/meta.dart';
-import 'package:ravepay/src/models/response.dart';
+import 'package:ravepay/src/models/metadata.dart';
 import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/endpoints.dart';
+import 'package:ravepay/src/utils/encryption.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
+import 'package:ravepay/src/utils/local_server.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/payload.dart';
-import 'package:ravepay/src/utils/keys.dart';
+import 'package:ravepay/src/utils/response.dart';
 
 class Charge {
   Charge({
@@ -29,7 +30,7 @@ class Charge {
     @required String email,
     @required String firstname,
     @required String lastname,
-    @required String redirectUrl,
+    String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
@@ -39,7 +40,7 @@ class Charge {
     String phonenumber,
     String billingzip,
     String narration,
-    List<Meta> meta,
+    List<Metadata> meta,
     String pin,
     String bvn,
     String chargeType,
@@ -55,7 +56,6 @@ class Charge {
     assert(email != null);
     assert(firstname != null);
     assert(lastname != null);
-    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -78,7 +78,7 @@ class Charge {
         ..add(Keys.Meta, meta)
         ..add(Keys.Pin, pin)
         ..add(Keys.Bvn, bvn)
-        ..add(Keys.RedirectUrl, redirectUrl)
+        ..add(Keys.RedirectUrl, redirectUrl ?? LOCAL_REDIRECT_URL)
         ..add(Keys.ChargeType, chargeType)
         ..add(Keys.DeviceFingerprint, deviceFingerprint)
         ..add(Keys.RecurringStop, recurringStop)
@@ -96,12 +96,12 @@ class Charge {
     @required String cvv,
     @required String expiryyear,
     @required String expirymonth,
-    @required String redirectUrl,
+    String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
     String paymentType,
-    List<Meta> meta,
+    List<Metadata> meta,
     String iP,
     String chargeType,
     bool includeIntegrityHash,
@@ -115,7 +115,6 @@ class Charge {
     assert(cvv != null);
     assert(expiryyear != null);
     assert(expirymonth != null);
-    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -133,7 +132,7 @@ class Charge {
         ..add(Keys.Lastname, lastname)
         ..add(Keys.Meta, meta)
         ..add(Keys.IP, iP)
-        ..add(Keys.RedirectUrl, redirectUrl)
+        ..add(Keys.RedirectUrl, redirectUrl ?? LOCAL_REDIRECT_URL)
         ..add(Keys.ChargeType, chargeType)
         ..add(Keys.SuggestedAuth, AuthType.PIN)
         ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
@@ -147,7 +146,7 @@ class Charge {
     @required String accountnumber,
     @required String firstname,
     @required String lastname,
-    @required String redirectUrl,
+    String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String iP,
@@ -158,8 +157,7 @@ class Charge {
     String phonenumber,
     String billingzip,
     String narration,
-    List<Meta> meta,
-    String pin,
+    List<Metadata> meta,
     String bvn,
     String deviceFingerprint,
     String paymentType,
@@ -173,7 +171,6 @@ class Charge {
     assert(email != null);
     assert(firstname != null);
     assert(lastname != null);
-    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
@@ -190,14 +187,13 @@ class Charge {
         ..add(Keys.Narration, narration)
         ..add(Keys.TxRef, txRef)
         ..add(Keys.Meta, meta)
-        ..add(Keys.Pin, pin)
         ..add(Keys.Bvn, bvn)
         ..add(Keys.ChargeType, chargeType)
         ..add(Keys.DeviceFingerprint, deviceFingerprint)
         ..add(Keys.RecurringStop, recurringStop)
         ..add(Keys.Accountbank, accountbank)
         ..add(Keys.Accountnumber, accountnumber)
-        ..add(Keys.RedirectUrl, redirectUrl)
+        ..add(Keys.RedirectUrl, redirectUrl ?? LOCAL_REDIRECT_URL)
         ..add(Keys.SuggestedAuth, AuthType.PIN)
         ..add(Keys.Payment_Type, paymentType ?? PaymentType.ACCOUNT)
         ..add(Keys.IsInternetBanking, isInternetBanking)
@@ -215,7 +211,7 @@ class Charge {
     @required String firstname,
     @required String lastname,
     @required String pin,
-    @required String redirectUrl,
+    String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
@@ -226,7 +222,7 @@ class Charge {
     String phonenumber,
     String billingzip,
     String narration,
-    List<Meta> meta,
+    List<Metadata> meta,
     String bvn,
     String deviceFingerprint,
     String recurringStop,
@@ -241,7 +237,6 @@ class Charge {
     assert(firstname != null);
     assert(lastname != null);
     assert(pin != null);
-    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Cardno, cardno)
@@ -264,8 +259,8 @@ class Charge {
         ..add(Keys.Meta, meta)
         ..add(Keys.Pin, pin)
         ..add(Keys.Bvn, bvn)
-        ..add(Keys.RedirectUrl, redirectUrl)
-        ..add(Keys.ChargeType, chargeType ?? "preauth")
+        ..add(Keys.RedirectUrl, redirectUrl ?? LOCAL_REDIRECT_URL)
+        ..add(Keys.ChargeType, chargeType ?? 'preauth')
         ..add(Keys.DeviceFingerprint, deviceFingerprint)
         ..add(Keys.RecurringStop, recurringStop)
         ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
@@ -280,13 +275,13 @@ class Charge {
     @required String accountnumber,
     @required String firstname,
     @required String lastname,
-    @required String redirectUrl,
+    String redirectUrl,
     String currency = Currencies.NAIRA,
     String country = Countries.NIGERIA,
     String txRef,
     String iP,
     String narration,
-    List<Meta> meta,
+    List<Metadata> meta,
     String deviceFingerprint,
     bool includeIntegrityHash,
   }) {
@@ -297,7 +292,6 @@ class Charge {
     assert(phonenumber != null);
     assert(firstname != null);
     assert(lastname != null);
-    assert(redirectUrl != null);
     return Charge(
       payload: Payload()
         ..add(Keys.Currency, currency)
@@ -315,7 +309,7 @@ class Charge {
         ..add(Keys.Accountbank, accountbank)
         ..add(Keys.Accountnumber, accountnumber)
         ..add(Keys.IsUssd, AuthType.USSD)
-        ..add(Keys.RedirectUrl, redirectUrl)
+        ..add(Keys.RedirectUrl, redirectUrl ?? LOCAL_REDIRECT_URL)
         ..add(Keys.OrderRef, DateTime.now().millisecondsSinceEpoch)
         ..add(Keys.Payment_Type, PaymentType.ACCOUNT)
         ..add(Keys.IncludeIntegrityHash, includeIntegrityHash),
@@ -338,14 +332,14 @@ class Charge {
       payload..add(Keys.QueryStringData, queryStringData);
     }
 
-    Log().debug("Charge.charge()", payload);
+    Log().debug('$runtimeType.charge()', payload);
 
     final _res = await _http.post(
       Endpoints.directCharge,
       <String, dynamic>{
-        "PBFPubKey": Ravepay().publicKey,
-        "client": _encryption.encrypt(payload.toMap()),
-        "alg": Encryption.ALGORITHM,
+        'PBFPubKey': Ravepay().publicKey,
+        'client': _encryption.encrypt(payload.toMap()),
+        'alg': Encryption.ALGORITHM,
       },
     );
 
@@ -354,7 +348,7 @@ class Charge {
       onTransform: (dynamic data, _) => Result.fromJson(data),
     );
 
-    Log().debug("Charge.charge() -> Response", _response);
+    Log().debug('$runtimeType.charge() -> Response', _response);
 
     return _response;
   }

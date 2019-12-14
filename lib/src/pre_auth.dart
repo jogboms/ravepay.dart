@@ -2,13 +2,13 @@ import 'package:meta/meta.dart';
 import 'package:ravepay/src/charge.dart';
 import 'package:ravepay/src/constants/countries.dart';
 import 'package:ravepay/src/constants/currencies.dart';
-import 'package:ravepay/src/models/meta.dart';
-import 'package:ravepay/src/models/response.dart';
+import 'package:ravepay/src/constants/endpoints.dart';
+import 'package:ravepay/src/models/metadata.dart';
 import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
+import 'package:ravepay/src/utils/response.dart';
 
 class PreAuth {
   PreAuth() : _http = HttpWrapper();
@@ -35,7 +35,7 @@ class PreAuth {
     String firstname,
     String lastname,
     String narration,
-    List<Meta> meta,
+    List<Metadata> meta,
     String pin,
     String bvn,
     String deviceFingerprint,
@@ -82,53 +82,47 @@ class PreAuth {
     @required String flwRef,
     @required String action,
   }) async {
-    final _res = await _http.post(
-      Endpoints.refundOrVoidPreauthorization,
-      <String, dynamic>{
-        'SECKEY': Ravepay().secretKey,
-        'ref': flwRef,
-        'action': action,
-      },
-    );
+    final payload = <String, dynamic>{
+      'SECKEY': Ravepay().secretKey,
+      'ref': flwRef,
+      'action': action,
+    };
+
+    Log().debug('$runtimeType.refundOrVoidCard()', payload);
+
     final _response = Response<Result>(
-      _res,
+      await _http.post(Endpoints.refundOrVoidPreauthorization, payload),
       onTransform: (dynamic data, _) => data,
     );
 
-    Log().debug("PreAuth.refundOrVoidCard($action) -> Response", _response);
+    Log().debug('$runtimeType.refundOrVoidCard($action) -> Response', _response);
 
     return _response;
   }
 
   Future<Response> voidCard(String flwRef) {
-    return _refundOrVoidCard(
-      flwRef: flwRef,
-      action: 'void',
-    );
+    return _refundOrVoidCard(flwRef: flwRef, action: 'void');
   }
 
   Future<Response> refundCard(String flwRef) {
-    return _refundOrVoidCard(
-      flwRef: flwRef,
-      action: 'refund',
-    );
+    return _refundOrVoidCard(flwRef: flwRef, action: 'refund');
   }
 
   Future<Response> captureCard(String flwRef, String amount) async {
-    final _res = await _http.post(
-      Endpoints.capturePreauthorizeCard,
-      <String, dynamic>{
-        'SECKEY': Ravepay().secretKey,
-        'flwRef': flwRef,
-        'amount': amount,
-      },
-    );
+    final payload = <String, dynamic>{
+      'SECKEY': Ravepay().secretKey,
+      'flwRef': flwRef,
+      'amount': amount,
+    };
+
+    Log().debug('$runtimeType.captureCard()', payload);
+
     final _response = Response<Result>(
-      _res,
+      await _http.post(Endpoints.capturePreauthorizeCard, payload),
       onTransform: (dynamic data, _) => data,
     );
 
-    Log().debug("PreAuth.captureCard() -> Response", _response);
+    Log().debug('$runtimeType.captureCard() -> Response', _response);
 
     return _response;
   }

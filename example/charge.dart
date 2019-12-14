@@ -1,6 +1,6 @@
 import 'package:ravepay/ravepay.dart';
 
-import '_keys.dart';
+import '_bootstrap.dart';
 
 // TODO
 Future<Response<Result>> card() async {
@@ -11,10 +11,9 @@ Future<Response<Result>> card() async {
     email: 'jeremiahogbomo@gmail.com',
     expirymonth: '08',
     expiryyear: '21',
-    firstname: "Jeremiah",
-    lastname: "Ogbomo",
-    meta: [Meta("hello", "world")],
-    redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
+    firstname: 'Jeremiah',
+    lastname: 'Ogbomo',
+    meta: [Metadata.named(name: 'hello', value: 'world')],
   );
 
   return await charge.charge();
@@ -23,16 +22,24 @@ Future<Response<Result>> card() async {
 // TODO
 Future<Response<Result>> pin() async {
   final charge = Charge.pin(
-    cardno: '5438898014560229',
-    cvv: '789',
-    expirymonth: '12',
+    cardno: '5399415100081601',
+//    cardno: '5399838383838381',
+    cvv: '658',
+//    cvv: '470',
+    expirymonth: '10',
     expiryyear: '21',
-    amount: '2000',
+//    expiryyear: '22',
+    amount: '550',
+//    amount: '12345',
     email: 'jeremiahogbomo@gmail.com',
-    firstname: "Jeremiah",
-    lastname: "Ogbomo",
-    pin: "3310",
-    redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
+    firstname: 'Jeremiah',
+    lastname: 'Ogbomo',
+    txRef: 'LM5GVOUW3TYF',
+    pin: '1234',
+//    pin: '1236',
+    meta: [
+      Metadata.named(name: 'hello', value: 'world'),
+    ],
   );
 
   return await charge.charge();
@@ -42,16 +49,15 @@ Future<Response<Result>> account() async {
   final _banks = await Banks().fetch();
   final banks = _banks.data;
 
-  final accessBankCode = banks.first.bankcode;
+  final accessBankCode = banks.first.code;
 
   final charge = Charge.account(
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',
-    firstname: "Jeremiah",
-    lastname: "Ogbomo",
+    firstname: 'Jeremiah',
+    lastname: 'Ogbomo',
     accountbank: accessBankCode,
     accountnumber: '0690000031',
-    redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
   );
 
   return await charge.charge();
@@ -61,27 +67,26 @@ Future<Response<Result>> ussd() async {
   final _banks = await Banks().fetch();
   final banks = _banks.data;
 
-  final accessBankCode = banks.first.bankcode;
+  final accessBankCode = banks.first.code;
 
   final charge = Charge.ussd(
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',
-    firstname: "Jeremiah",
-    lastname: "Ogbomo",
+    firstname: 'Jeremiah',
+    lastname: 'Ogbomo',
     accountbank: accessBankCode,
     accountnumber: '0690000031',
     phonenumber: '081245554343',
-    redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
   );
 
   return await charge.charge();
 }
 
 void main() async {
-  Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
+  init();
 
   await card();
-  await pin();
-  await account();
-  await ussd();
+//  await pin();
+//  await account();
+//  await ussd();
 }

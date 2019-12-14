@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/constants/url.dart';
 import 'package:ravepay/src/utils/log.dart';
 
 class Ravepay {
@@ -12,7 +13,7 @@ class Ravepay {
     @required this.publicKey,
     @required this.secretKey,
     @required this.production,
-  }) : baseUrl = production ? PROD_BASE_URI : STAGING_BASE_URI;
+  }) : baseUrl = production ? Url.Prod : Url.Staging;
 
   @visibleForTesting
   static void reset() {
@@ -23,11 +24,13 @@ class Ravepay {
     @required String publicKey,
     @required String secretKey,
     @required bool production,
+    bool useLogger = false,
+    bool restart = false,
   }) {
     assert(publicKey != null);
     assert(secretKey != null);
     assert(production != null);
-    assert(_instance == null,
+    assert((_instance != null && restart == true) || _instance == null,
         'Are you trying to reset the previous keys by calling Ravepay.init() again?.');
     _instance = Ravepay._(
       publicKey: publicKey,
@@ -35,12 +38,10 @@ class Ravepay {
       production: production,
     );
     // Initialize logger
-    Log.init(production);
+    Log.init(!useLogger);
   }
 
   static Ravepay _instance;
-  static const PROD_BASE_URI = "https://api.ravepay.co/";
-  static const STAGING_BASE_URI = "https://ravesandboxapi.flutterwave.com/";
 
   final String publicKey;
   final String secretKey;

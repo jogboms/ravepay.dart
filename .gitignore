@@ -18,3 +18,5 @@ doc/api/
 *.iml
 *.ipr
 *.iws
+
+*.g.dart
