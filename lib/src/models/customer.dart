@@ -48,7 +48,7 @@ abstract class Customer with ModelInterface implements Built<Customer, CustomerB
   int get accountId;
 
   @override
-  Map<String, dynamic> toMap() => serializers.serializeWith(Customer.serializer, this);
+  Map<String, dynamic> toJson() => serializers.serializeWith(Customer.serializer, this);
 
   static Customer fromJson(Map<String, dynamic> map) => serializers.deserializeWith(Customer.serializer, map);
 

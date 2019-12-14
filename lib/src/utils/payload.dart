@@ -1,4 +1,4 @@
-import 'dart:convert' show json;
+import 'dart:convert';
 
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/constants/keys.dart';

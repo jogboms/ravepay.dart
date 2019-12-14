@@ -4,9 +4,9 @@ import '_bootstrap.dart';
 
 void preauth() async {
   await PreAuth().preauth(
-    cardno: '5840406187553286',
-    cvv: '116',
-    expirymonth: '12',
+    cardno: '4556052704172643',
+    cvv: '899',
+    expirymonth: '08',
     expiryyear: '21',
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',
@@ -18,9 +18,9 @@ void preauth() async {
 
 void voidCard() async {
   final _charge = await PreAuth().preauth(
-    cardno: '5840406187553286',
-    cvv: '116',
-    expirymonth: '12',
+    cardno: '4556052704172643',
+    cvv: '899',
+    expirymonth: '08',
     expiryyear: '21',
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',
@@ -34,9 +34,9 @@ void voidCard() async {
 
 void refundCard() async {
   final _charge = await PreAuth().preauth(
-    cardno: '5840406187553286',
-    cvv: '116',
-    expirymonth: '12',
+    cardno: '4556052704172643',
+    cvv: '899',
+    expirymonth: '08',
     expiryyear: '21',
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',

@@ -30,9 +30,7 @@ Future<Response<Result>> pin() async {
     lastname: 'Ogbomo',
     txRef: 'LM5GVOUW3TYF',
     pin: '1234',
-    meta: [
-      Metadata.named(name: 'hello', value: 'world'),
-    ],
+    meta: [Metadata.named(name: 'hello', value: 'world')],
   );
 
   return await charge.charge();

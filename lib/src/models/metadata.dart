@@ -41,7 +41,7 @@ abstract class Metadata with ModelInterface implements Built<Metadata, MetadataB
   int get getpaidTransactionId;
 
   @override
-  Map<String, dynamic> toMap() => serializers.serializeWith(Metadata.serializer, this);
+  Map<String, dynamic> toJson() => serializers.serializeWith(Metadata.serializer, this);
 
   static Metadata fromJson(Map<String, dynamic> map) => serializers.deserializeWith(Metadata.serializer, map);
 

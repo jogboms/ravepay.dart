@@ -144,7 +144,7 @@ abstract class VerifyResult with ModelInterface implements Built<VerifyResult, V
   bool get isSuccessful => status == 'successful';
 
   @override
-  Map<String, dynamic> toMap() => serializers.serializeWith(VerifyResult.serializer, this);
+  Map<String, dynamic> toJson() => serializers.serializeWith(VerifyResult.serializer, this);
 
   static VerifyResult fromJson(Map<String, dynamic> map) => serializers.deserializeWith(VerifyResult.serializer, map);
 
