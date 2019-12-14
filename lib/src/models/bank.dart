@@ -21,7 +21,7 @@ abstract class Bank with ModelInterface implements Built<Bank, BankBuilder> {
   bool get internetbanking;
 
   @override
-  Map<String, dynamic> toMap() => serializers.serializeWith(Bank.serializer, this);
+  Map<String, dynamic> toJson() => serializers.serializeWith(Bank.serializer, this);
 
   static Bank fromJson(Map<String, dynamic> map) => serializers.deserializeWith(Bank.serializer, map);
 

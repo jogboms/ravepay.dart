@@ -212,7 +212,7 @@ abstract class Result with ModelInterface implements Built<Result, ResultBuilder
   String get authurl => hasValidUrl ? invalidAuthUrl : null;
 
   @override
-  Map<String, dynamic> toMap() => serializers.serializeWith(Result.serializer, this);
+  Map<String, dynamic> toJson() => serializers.serializeWith(Result.serializer, this);
 
   static Result fromJson(Map<String, dynamic> map) => serializers.deserializeWith(Result.serializer, map);
 

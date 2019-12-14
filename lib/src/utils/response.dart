@@ -4,14 +4,13 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/constants/strings.dart';
-import 'package:ravepay/src/models/main.dart';
 import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/exceptions.dart';
 import 'package:ravepay/src/utils/log.dart';
 
 typedef TransformFunction<T> = T Function(dynamic data, String status);
 
-class Response<T> with ModelInterface {
+class Response<T> {
   factory Response(http.Response _response, {TransformFunction<T> onTransform, bool shouldThrow = true}) {
     final _status = _Status(_response.statusCode);
     try {
@@ -70,7 +69,7 @@ class Response<T> with ModelInterface {
   final T data;
 
   @override
-  Map<String, dynamic> toMap() => <String, dynamic>{'status': status.code, 'message': message, 'data': data};
+  String toString() => ({'status': status.code, 'message': message, 'data': data?.toString()}).toString();
 }
 
 class _Status {

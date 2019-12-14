@@ -6,10 +6,13 @@ import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:ravepay/src/models/bank.dart';
 import 'package:ravepay/src/models/card.dart';
+import 'package:ravepay/src/models/card_token.dart';
+import 'package:ravepay/src/models/charge_param.dart';
 import 'package:ravepay/src/models/charge_token.dart';
 import 'package:ravepay/src/models/customer.dart';
 import 'package:ravepay/src/models/metadata.dart';
 import 'package:ravepay/src/models/result.dart';
+import 'package:ravepay/src/models/validate/data.dart';
 import 'package:ravepay/src/models/validate/tx.dart';
 import 'package:ravepay/src/models/validate/validate_result.dart';
 import 'package:ravepay/src/models/verify/verify_result.dart';
@@ -19,8 +22,15 @@ part 'serializers.g.dart';
 @SerializersFor([
   Result,
   VerifyResult,
+  CardToken,
   Card,
+  Data,
+  Tx,
   ValidateResult,
+  ChargeParam,
+  ChargeToken,
+  Customer,
+  Metadata,
   Bank,
   Metadata,
 ])

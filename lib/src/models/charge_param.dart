@@ -83,7 +83,7 @@ abstract class ChargeParam with ModelInterface implements Built<ChargeParam, Cha
   String get pin;
 
   @override
-  Map<String, dynamic> toMap() => serializers.serializeWith(ChargeParam.serializer, this);
+  Map<String, dynamic> toJson() => serializers.serializeWith(ChargeParam.serializer, this);
 
   static ChargeParam fromJson(Map<String, dynamic> map) => serializers.deserializeWith(ChargeParam.serializer, map);
 

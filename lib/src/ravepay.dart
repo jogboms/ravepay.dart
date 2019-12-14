@@ -9,11 +9,8 @@ class Ravepay {
     return _instance;
   }
 
-  Ravepay._({
-    @required this.publicKey,
-    @required this.secretKey,
-    @required this.production,
-  }) : baseUrl = production ? Url.Prod : Url.Staging;
+  Ravepay._({@required this.publicKey, @required this.secretKey, @required this.production})
+      : baseUrl = production ? Url.Prod : Url.Staging;
 
   @visibleForTesting
   static void reset() {
@@ -32,11 +29,7 @@ class Ravepay {
     assert(production != null);
     assert((_instance != null && restart == true) || _instance == null,
         'Are you trying to reset the previous keys by calling Ravepay.init() again?.');
-    _instance = Ravepay._(
-      publicKey: publicKey,
-      secretKey: secretKey,
-      production: production,
-    );
+    _instance = Ravepay._(publicKey: publicKey, secretKey: secretKey, production: production);
     // Initialize logger
     Log.init(!useLogger);
   }

@@ -19,7 +19,7 @@ abstract class ChargeToken with ModelInterface implements Built<ChargeToken, Cha
   String get embedToken;
 
   @override
-  Map<String, dynamic> toMap() => serializers.serializeWith(ChargeToken.serializer, this);
+  Map<String, dynamic> toJson() => serializers.serializeWith(ChargeToken.serializer, this);
 
   static ChargeToken fromJson(Map<String, dynamic> map) => serializers.deserializeWith(ChargeToken.serializer, map);
 
