@@ -1,15 +1,11 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
-class Tokenize {
-  Tokenize() : _http = HttpWrapper();
-
-  final HttpWrapper _http;
-
+class Tokenize extends Api {
   // TODO
   Future<Response<dynamic>> _charge(
     String url, {
@@ -50,7 +46,7 @@ class Tokenize {
     Log().debug('$runtimeType.charge()', payload);
 
     final _response = Response<dynamic>(
-      await _http.post(url, payload),
+      await http.post(url, payload),
       onTransform: (dynamic data, _) => data,
     );
 

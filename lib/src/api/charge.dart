@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/auth.dart';
 import 'package:ravepay/src/constants/countries.dart';
 import 'package:ravepay/src/constants/currencies.dart';
@@ -9,17 +10,13 @@ import 'package:ravepay/src/models/metadata.dart';
 import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/encryption.dart';
-import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/local_server.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/payload.dart';
 import 'package:ravepay/src/utils/response.dart';
 
-class Charge {
-  Charge({
-    @required this.payload,
-  })  : assert(payload != null),
-        _http = HttpWrapper();
+class Charge extends Api {
+  Charge({@required this.payload}) : assert(payload != null);
 
   factory Charge.card({
     @required String cardno,
@@ -316,7 +313,6 @@ class Charge {
     );
   }
 
-  final HttpWrapper _http;
   final Payload payload;
   static final _encryption = Encryption(secretKey: Ravepay().secretKey);
 
@@ -324,17 +320,13 @@ class Charge {
     if (payload.getItem(Keys.IncludeIntegrityHash) == true) {
       payload.remove(Keys.IncludeIntegrityHash);
       final integrityHash = _encryption.integrityHash(payload.toMap());
-      final queryStringData = payload.toMap()
-        ..putIfAbsent(
-          Keys.IntegrityHash,
-          () => integrityHash,
-        );
+      final queryStringData = payload.toMap()..putIfAbsent(Keys.IntegrityHash, () => integrityHash);
       payload..add(Keys.QueryStringData, queryStringData);
     }
 
     Log().debug('$runtimeType.charge()', payload);
 
-    final _res = await _http.post(
+    final _res = await http.post(
       Endpoints.directCharge,
       <String, dynamic>{
         'PBFPubKey': Ravepay().publicKey,
@@ -343,10 +335,7 @@ class Charge {
       },
     );
 
-    final _response = Response<Result>(
-      _res,
-      onTransform: (dynamic data, _) => Result.fromJson(data),
-    );
+    final _response = Response<Result>(_res, onTransform: (dynamic data, _) => Result.fromJson(data));
 
     Log().debug('$runtimeType.charge() -> Response', _response);
 

@@ -1,15 +1,11 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
-class Fees {
-  Fees() : _http = HttpWrapper();
-
-  final HttpWrapper _http;
-
+class Fees extends Api {
   // TODO
   Future<Response<dynamic>> card({
     @required String amount,
@@ -30,7 +26,7 @@ class Fees {
     Log().debug('$runtimeType.card()', payload);
 
     final _response = Response<dynamic>(
-      await _http.post(Endpoints.getFees, payload),
+      await http.post(Endpoints.getFees, payload),
       onTransform: (dynamic data, _) => data,
     );
 
@@ -58,7 +54,7 @@ class Fees {
     Log().debug('$runtimeType.account()', payload);
 
     final _response = Response<dynamic>(
-      await _http.post(Endpoints.getFees, payload),
+      await http.post(Endpoints.getFees, payload),
       onTransform: (dynamic data, _) => data,
     );
 

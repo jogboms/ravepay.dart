@@ -1,16 +1,11 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
-class Disburse {
-  Disburse() : _http = HttpWrapper();
-
-  final HttpWrapper _http;
-
-  // TODO
+class Disburse extends Api {
   Future<Response<dynamic>> disburse({
     @required String bankCode,
     @required String accountNumber,
@@ -33,7 +28,7 @@ class Disburse {
     Log().debug('$runtimeType.disburse()', payload);
 
     final _response = Response<dynamic>(
-      await _http.post(Endpoints.disburse, payload),
+      await http.post(Endpoints.disburse, payload),
       onTransform: (dynamic data, _) => data,
     );
 

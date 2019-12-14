@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:ravepay/src/ravepay.dart';
+import 'package:meta/meta.dart';
 import 'package:ravepay/src/utils/exceptions.dart';
 import 'package:ravepay/src/utils/log.dart';
 
 class HttpWrapper {
-  HttpWrapper() : baseUrl = Ravepay().baseUrl;
+  HttpWrapper({@required this.baseUrl});
 
   static final Map<String, String> _headers = {'Accept': 'application/json', 'Content-Type': 'application/json'};
 

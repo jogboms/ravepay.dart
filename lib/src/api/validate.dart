@@ -1,19 +1,15 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/auth.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/constants/strings.dart';
 import 'package:ravepay/src/models/validate/validate_result.dart';
 import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/exceptions.dart';
-import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
-class Validate {
-  Validate() : _http = HttpWrapper();
-
-  final HttpWrapper _http;
-
+class Validate extends Api {
   Future<Response<ValidateResult>> charge({
     @required String authModelUsed,
     @required String authUrl,
@@ -74,7 +70,7 @@ class Validate {
     Log().debug(logTag, payload);
 
     final _response = Response<ValidateResult>(
-      await _http.post(url, payload),
+      await http.post(url, payload),
       onTransform: (dynamic data, _) => ValidateResult.fromJson(data),
     );
 

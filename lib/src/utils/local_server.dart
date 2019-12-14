@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:ravepay/src/constants/strings.dart';
+
 const String LOCAL_SCHEME = 'http://';
 const String LOCAL_IP = '127.0.0.1';
 const int LOCAL_PORT = 8184;
@@ -15,8 +17,8 @@ class LocalServer {
   final String localhost;
   final int port;
   final String scheme;
-  HttpServer _server;
   final _completer = Completer<Map<String, dynamic>>();
+  HttpServer _server;
 
   Future<Map<String, dynamic>> get onComplete => _completer.future;
 
@@ -27,26 +29,23 @@ class LocalServer {
 
     final completer = Completer<void>();
 
-    await runZoned(
-      () async {
-        _server = await HttpServer.bind(localhost, port, shared: true);
+    await runZoned(() async {
+      _server = await HttpServer.bind(localhost, port, shared: true);
 
-        _server.listen((HttpRequest request) async {
-          request.response
-            ..statusCode = 200
-            ..headers.set('Content-Type', ContentType.html.mimeType)
-            ..write('<html><h1><center>You can now close this window.</center></h1></html>');
+      _server.listen((HttpRequest request) async {
+        request.response
+          ..statusCode = 200
+          ..headers.set('Content-Type', ContentType.html.mimeType)
+          ..write('<html><center><h1>${Strings.closeLocalServerWindow}</h1></center></html>');
 
-          _completer.complete(request.requestedUri.queryParameters);
+        _completer.complete(request.requestedUri.queryParameters);
 
-          await request.response.close();
-          await close();
-        });
+        await request.response.close();
+        await close();
+      });
 
-        completer.complete();
-      },
-      onError: (dynamic e) => print('Error: $e'),
-    );
+      completer.complete();
+    }, onError: (dynamic e) => print('Error: $e'));
 
     return completer.future;
   }

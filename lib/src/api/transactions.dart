@@ -1,15 +1,11 @@
+import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/models/verify/verify_result.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
-class Transactions {
-  Transactions() : _http = HttpWrapper();
-
-  final HttpWrapper _http;
-
+class Transactions extends Api {
   Future<Response<VerifyResult>> verify({
     String flwRef,
     String txRef,
@@ -25,7 +21,7 @@ class Transactions {
     Log().debug('$runtimeType.verify()', payload);
 
     final _response = Response<VerifyResult>(
-      await _http.post(Endpoints.verifyTransaction, payload),
+      await http.post(Endpoints.verifyTransaction, payload),
       onTransform: (dynamic data, _) => VerifyResult.fromJson(data),
     );
 
@@ -53,7 +49,7 @@ class Transactions {
     Log().debug('$runtimeType.requery()', payload);
 
     final _response = Response<dynamic>(
-      await _http.post(Endpoints.requeryTransaction, payload),
+      await http.post(Endpoints.requeryTransaction, payload),
       onTransform: (dynamic data, _) => data,
     );
 

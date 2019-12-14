@@ -1,20 +1,16 @@
 import 'package:meta/meta.dart';
-import 'package:ravepay/src/charge.dart';
+import 'package:ravepay/src/api/api.dart';
+import 'package:ravepay/src/api/charge.dart';
 import 'package:ravepay/src/constants/countries.dart';
 import 'package:ravepay/src/constants/currencies.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/models/metadata.dart';
 import 'package:ravepay/src/models/result.dart';
 import 'package:ravepay/src/ravepay.dart';
-import 'package:ravepay/src/utils/http_wrapper.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
-class PreAuth {
-  PreAuth() : _http = HttpWrapper();
-
-  final HttpWrapper _http;
-
+class PreAuth extends Api {
   Future<Response<Result>> preauth({
     @required String cardno,
     @required String cvv,
@@ -91,7 +87,7 @@ class PreAuth {
     Log().debug('$runtimeType.refundOrVoidCard()', payload);
 
     final _response = Response<Result>(
-      await _http.post(Endpoints.refundOrVoidPreauthorization, payload),
+      await http.post(Endpoints.refundOrVoidPreauthorization, payload),
       onTransform: (dynamic data, _) => data,
     );
 
@@ -118,7 +114,7 @@ class PreAuth {
     Log().debug('$runtimeType.captureCard()', payload);
 
     final _response = Response<Result>(
-      await _http.post(Endpoints.capturePreauthorizeCard, payload),
+      await http.post(Endpoints.capturePreauthorizeCard, payload),
       onTransform: (dynamic data, _) => data,
     );
 
