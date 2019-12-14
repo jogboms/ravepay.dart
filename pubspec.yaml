@@ -2,17 +2,19 @@ name: ravepay
 description: RavePay by Flutterwave Dart SDK. http://rave.flutterwave.com
 version: 0.0.1
 author: Jeremiah Ogbomo <jeremiahogbomo@gmail.com>
-homepage: https://github.com/jogboms/ravepay_dart
+homepage: https://github.com/jogboms/ravepay.dart
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0-dev <3.0.0"
 
 dependencies:
-  crypto: ^2.0.6
+  crypto: ^2.1.4
   tripledes: ^2.1.0
-  http: ^0.12.0
+  http: ^0.12.0+2
 
 dev_dependencies:
-  test: ^1.0.0
-  pedantic: ^1.4.0
-  test_coverage: ^0.2.0
+  test: ^1.9.0
+  pedantic: ^1.8.0
+  test_coverage:
+    git:
+      url: https://github.com/jogboms/test-coverage.git
