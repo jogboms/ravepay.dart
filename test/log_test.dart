@@ -5,9 +5,9 @@ import 'package:ravepay/src/utils/log.dart';
 import 'package:test/test.dart';
 
 String readInputSync({Encoding encoding = systemEncoding}) {
-  final List input = [];
+  final List input = <String>[];
   while (true) {
-    int byte = stdin.readByteSync();
+    final byte = stdin.readByteSync();
     if (byte < 0) {
       if (input.isEmpty) return null;
       break;
