@@ -1,6 +1,6 @@
 import 'package:ravepay/ravepay.dart';
 
-import '../test/_constants.dart';
+import '_bootstrap.dart';
 
 void preauth() async {
   await PreAuth().preauth(
@@ -10,10 +10,9 @@ void preauth() async {
     expiryyear: '21',
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',
-    firstname: "Jeremiah",
-    lastname: "Ogbomo",
-    pin: "1111",
-    redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
+    firstname: 'Jeremiah',
+    lastname: 'Ogbomo',
+    pin: '1111',
   );
 }
 
@@ -25,10 +24,9 @@ void voidCard() async {
     expiryyear: '21',
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',
-    firstname: "Jeremiah",
-    lastname: "Ogbomo",
-    pin: "1111",
-    redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
+    firstname: 'Jeremiah',
+    lastname: 'Ogbomo',
+    pin: '1111',
   );
 
   await PreAuth().voidCard(_charge.data.flwRef);
@@ -42,17 +40,16 @@ void refundCard() async {
     expiryyear: '21',
     amount: '2000',
     email: 'jeremiahogbomo@gmail.com',
-    firstname: "Jeremiah",
-    lastname: "Ogbomo",
-    pin: "1111",
-    redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
+    firstname: 'Jeremiah',
+    lastname: 'Ogbomo',
+    pin: '1111',
   );
 
   await PreAuth().refundCard(_charge.data.flwRef);
 }
 
 void main() async {
-  Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
+  init();
 
   // preauth();
   voidCard();

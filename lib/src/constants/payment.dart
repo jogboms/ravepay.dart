@@ -1,5 +1,3 @@
 class PaymentType {
-  PaymentType._();
-
-  static const ACCOUNT = "account";
+  static const ACCOUNT = 'account';
 }

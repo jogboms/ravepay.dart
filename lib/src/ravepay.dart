@@ -1,18 +1,19 @@
 import 'package:meta/meta.dart';
+import 'package:ravepay/src/constants/url.dart';
 import 'package:ravepay/src/utils/log.dart';
 
-class Rave {
-  factory Rave() {
+class Ravepay {
+  factory Ravepay() {
     assert(_instance != null,
-        'Please make sure to call Rave.init() at the top of your app or before using the other functions.');
+        'Please make sure to call Ravepay.init() at the top of your app or before using the other functions.');
     return _instance;
   }
 
-  Rave._({
+  Ravepay._({
     @required this.publicKey,
     @required this.secretKey,
     @required this.production,
-  }) : baseUrl = production ? PROD_BASE_UI : STAGING_BASE_UI;
+  }) : baseUrl = production ? Url.Prod : Url.Staging;
 
   @visibleForTesting
   static void reset() {
@@ -23,24 +24,24 @@ class Rave {
     @required String publicKey,
     @required String secretKey,
     @required bool production,
+    bool useLogger = false,
+    bool restart = false,
   }) {
     assert(publicKey != null);
     assert(secretKey != null);
     assert(production != null);
-    assert(_instance == null,
-        'Are you trying to reset the previous keys by calling Rave.init() again?.');
-    _instance = Rave._(
+    assert((_instance != null && restart == true) || _instance == null,
+        'Are you trying to reset the previous keys by calling Ravepay.init() again?.');
+    _instance = Ravepay._(
       publicKey: publicKey,
       secretKey: secretKey,
       production: production,
     );
     // Initialize logger
-    Log.init(production);
+    Log.init(!useLogger);
   }
 
-  static Rave _instance;
-  static const PROD_BASE_UI = "https://api.ravepay.co/";
-  static const STAGING_BASE_UI = "https://ravesandboxapi.flutterwave.com/";
+  static Ravepay _instance;
 
   final String publicKey;
   final String secretKey;
@@ -49,6 +50,6 @@ class Rave {
 
   @override
   String toString() {
-    return 'Rave(publicKey: $publicKey, secretKey: $secretKey, production: $production, baseUrl: $baseUrl)';
+    return '$runtimeType(publicKey: $publicKey, secretKey: $secretKey, production: $production, baseUrl: $baseUrl)';
   }
 }
