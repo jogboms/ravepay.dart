@@ -6,7 +6,7 @@
 
 ```yaml
 dependencies:
-  ravepay: "^0.0.1"
+  ravepay: "^0.0.1+1"
 ```
 
 ## Import
