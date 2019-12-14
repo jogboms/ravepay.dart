@@ -8,6 +8,7 @@ branches:
 
 dart_task:
   - dartfmt
+  - pub run build_runner build
   - test
   - dartanalyzer
 
