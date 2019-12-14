@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -14,14 +15,15 @@ class Response<T> with ModelInterface {
   factory Response(http.Response _response, {TransformFunction<T> onTransform, bool shouldThrow = true}) {
     final _status = _Status(_response.statusCode);
     try {
-      final response = Model.stringToMap(_response.body);
-      if (response == null || response is! Map) {
+      final dynamic response = json.decode(_response.body);
+      if (response == null || (response is! Map && response is! List)) {
         throw ResponseException(_status.code, _response.reasonPhrase);
       }
 
-      final String status = response.containsKey('status') ? response['status'] : (_status.isOk ? 'success' : 'error');
+      final String status =
+          response is Map && response.containsKey('status') ? response['status'] : (_status.isOk ? 'success' : 'error');
 
-      final String message = response.containsKey('message') && response['message'] != null
+      final String message = response is Map && response.containsKey('message') && response['message'] != null
           ? response['message']
           : !Ravepay().production ? _response.reasonPhrase : Strings.errorMessage;
 
@@ -29,8 +31,7 @@ class Response<T> with ModelInterface {
         throw ResponseException(_status.code, status, message);
       }
 
-      final Map<String, dynamic> rawData =
-          _status.isOk ? response.containsKey('data') ? response['data'] : response : null;
+      final dynamic rawData = response is Map && response.containsKey('data') ? response['data'] : response;
 
       return Response._(
         status: _status,

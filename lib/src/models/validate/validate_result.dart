@@ -41,7 +41,9 @@ abstract class Data with ModelInterface implements Built<Data, DataBuilder> {
 
   @nullable
   String get responsetoken;
+
   String get responsecode;
+
   String get responsemessage;
 
   @override

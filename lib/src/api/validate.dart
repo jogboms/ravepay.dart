@@ -4,7 +4,6 @@ import 'package:ravepay/src/constants/auth.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/constants/strings.dart';
 import 'package:ravepay/src/models/validate/validate_result.dart';
-import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/exceptions.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
@@ -32,7 +31,7 @@ class Validate extends Api {
     }
 
     String url;
-    final payload = <String, String>{'PBFPubKey': Ravepay().publicKey, 'otp': otp};
+    final payload = {'PBFPubKey': keys.public, 'otp': otp};
 
     switch (authModelUsed.toLowerCase()) {
       case AuthType.PIN:

@@ -14,6 +14,7 @@ abstract class ChargeToken with ModelInterface implements Built<ChargeToken, Cha
 
   @BuiltValueField(wireName: 'user_token', compare: false)
   String get userToken;
+
   @BuiltValueField(wireName: 'embed_token', compare: false)
   String get embedToken;
 

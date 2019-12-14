@@ -1,7 +1,6 @@
 import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/models/verify/verify_result.dart';
-import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
@@ -12,11 +11,7 @@ class Transactions extends Api {
   }) async {
     assert(!(flwRef == null && txRef == null), 'You must pass either flwRef or txRef');
 
-    final payload = <String, dynamic>{
-      'SECKEY': Ravepay().secretKey,
-      'flwref': flwRef,
-      'txref': txRef,
-    };
+    final payload = {'SECKEY': keys.secret, 'flwref': flwRef, 'txref': txRef};
 
     Log().debug('$runtimeType.verify()', payload);
 
@@ -38,8 +33,8 @@ class Transactions extends Api {
   }) async {
     assert(!(flwRef == null && txRef == null), 'You must pass either flwRef or txRef');
 
-    final payload = <String, dynamic>{
-      'SECKEY': Ravepay().secretKey,
+    final payload = {
+      'SECKEY': keys.secret,
       'flwref': flwRef,
       'txref': txRef,
       'last_attempt': lastAttempt,

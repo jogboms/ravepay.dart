@@ -6,7 +6,6 @@ import 'package:ravepay/src/constants/currencies.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
 import 'package:ravepay/src/models/metadata.dart';
 import 'package:ravepay/src/models/result.dart';
-import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
@@ -18,7 +17,7 @@ class PreAuth extends Api {
     @required String expiryyear,
     @required String expirymonth,
     @required String email,
-    @required String redirectUrl,
+    String redirectUrl,
     String country = Countries.NIGERIA,
     String currency = Currencies.NAIRA,
     String suggestedAuth,
@@ -44,7 +43,6 @@ class PreAuth extends Api {
     assert(expiryyear != null);
     assert(expirymonth != null);
     assert(email != null);
-    assert(redirectUrl != null);
     return Charge.preauth(
       cardno: cardno,
       currency: currency,
@@ -78,11 +76,7 @@ class PreAuth extends Api {
     @required String flwRef,
     @required String action,
   }) async {
-    final payload = <String, dynamic>{
-      'SECKEY': Ravepay().secretKey,
-      'ref': flwRef,
-      'action': action,
-    };
+    final payload = {'SECKEY': keys.secret, 'ref': flwRef, 'action': action};
 
     Log().debug('$runtimeType.refundOrVoidCard()', payload);
 
@@ -105,11 +99,7 @@ class PreAuth extends Api {
   }
 
   Future<Response> captureCard(String flwRef, String amount) async {
-    final payload = <String, dynamic>{
-      'SECKEY': Ravepay().secretKey,
-      'flwRef': flwRef,
-      'amount': amount,
-    };
+    final payload = {'SECKEY': keys.secret, 'flwRef': flwRef, 'amount': amount};
 
     Log().debug('$runtimeType.captureCard()', payload);
 

@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
-import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
@@ -16,8 +15,8 @@ class Fees extends Api {
     assert(currency != null);
     assert(card6 != null);
 
-    final payload = <String, dynamic>{
-      'PBFPubKey': Ravepay().publicKey,
+    final payload = {
+      'PBFPubKey': keys.public,
       'amount': amount,
       'currency': currency,
       'card6': card6,
@@ -44,11 +43,11 @@ class Fees extends Api {
     assert(amount != null);
     assert(currency != null);
 
-    final payload = <String, dynamic>{
-      'PBFPubKey': Ravepay().publicKey,
+    final payload = {
+      'PBFPubKey': keys.public,
       'amount': amount,
       'currency': currency,
-      'ptype': ptype ?? 2
+      'ptype': ptype ?? 2,
     };
 
     Log().debug('$runtimeType.account()', payload);

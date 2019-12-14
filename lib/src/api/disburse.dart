@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
-import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
@@ -17,8 +16,8 @@ class Disburse extends Api {
     assert(currency != null);
     assert(amount != null);
 
-    final payload = <String, dynamic>{
-      'seckey': Ravepay().secretKey,
+    final payload = {
+      'seckey': keys.secret,
       'bank_code': bankCode,
       'account_number': accountNumber,
       'currency': currency,

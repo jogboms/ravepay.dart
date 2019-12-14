@@ -13,7 +13,6 @@ void preauth() async {
     firstname: 'Jeremiah',
     lastname: 'Ogbomo',
     pin: '1111',
-    redirectUrl: 'https://rave-web.herokuapp.com/receivepayment',
   );
 }
 
@@ -28,7 +27,6 @@ void voidCard() async {
     firstname: 'Jeremiah',
     lastname: 'Ogbomo',
     pin: '1111',
-    redirectUrl: 'https://rave-web.herokuapp.com/receivepayment',
   );
 
   await PreAuth().voidCard(_charge.data.flwRef);
@@ -45,7 +43,6 @@ void refundCard() async {
     firstname: 'Jeremiah',
     lastname: 'Ogbomo',
     pin: '1111',
-    redirectUrl: 'https://rave-web.herokuapp.com/receivepayment',
   );
 
   await PreAuth().refundCard(_charge.data.flwRef);

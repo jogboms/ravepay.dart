@@ -2,13 +2,12 @@ import 'dart:convert' show json;
 
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/constants/keys.dart';
-import 'package:ravepay/src/ravepay.dart';
 
 typedef PayloadBuilder = dynamic Function(Map<String, dynamic> params);
 
 class Payload {
-  Payload() {
-    add(Keys.PublicKey, Ravepay().publicKey);
+  Payload(String publicKey) {
+    add(Keys.PublicKey, publicKey);
     add(Keys.TxRef, 'txref-${DateTime.now().millisecondsSinceEpoch}');
   }
 

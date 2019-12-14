@@ -54,7 +54,7 @@ class Charge extends Api {
     assert(firstname != null);
     assert(lastname != null);
     return Charge(
-      payload: Payload()
+      payload: Payload(Ravepay().publicKey)
         ..add(Keys.Cardno, cardno)
         ..add(Keys.Currency, currency)
         ..add(Keys.SuggestedAuth, suggestedAuth)
@@ -113,7 +113,7 @@ class Charge extends Api {
     assert(expiryyear != null);
     assert(expirymonth != null);
     return Charge(
-      payload: Payload()
+      payload: Payload(Ravepay().publicKey)
         ..add(Keys.Cardno, cardno)
         ..add(Keys.Cvv, cvv)
         ..add(Keys.Expiryyear, expiryyear)
@@ -169,7 +169,7 @@ class Charge extends Api {
     assert(firstname != null);
     assert(lastname != null);
     return Charge(
-      payload: Payload()
+      payload: Payload(Ravepay().publicKey)
         ..add(Keys.Currency, currency)
         ..add(Keys.SuggestedAuth, suggestedAuth)
         ..add(Keys.Country, country)
@@ -235,7 +235,7 @@ class Charge extends Api {
     assert(lastname != null);
     assert(pin != null);
     return Charge(
-      payload: Payload()
+      payload: Payload(Ravepay().publicKey)
         ..add(Keys.Cardno, cardno)
         ..add(Keys.Currency, currency)
         ..add(Keys.SuggestedAuth, suggestedAuth ?? AuthType.PIN)
@@ -290,7 +290,7 @@ class Charge extends Api {
     assert(firstname != null);
     assert(lastname != null);
     return Charge(
-      payload: Payload()
+      payload: Payload(Ravepay().publicKey)
         ..add(Keys.Currency, currency)
         ..add(Keys.Country, country)
         ..add(Keys.Amount, amount)
@@ -314,9 +314,10 @@ class Charge extends Api {
   }
 
   final Payload payload;
-  static final _encryption = Encryption(secretKey: Ravepay().secretKey);
 
   Future<Response<Result>> charge() async {
+    final _encryption = Encryption(secretKey: keys.secret);
+
     if (payload.getItem(Keys.IncludeIntegrityHash) == true) {
       payload.remove(Keys.IncludeIntegrityHash);
       final integrityHash = _encryption.integrityHash(payload.toMap());
@@ -329,7 +330,7 @@ class Charge extends Api {
     final _res = await http.post(
       Endpoints.directCharge,
       <String, dynamic>{
-        'PBFPubKey': Ravepay().publicKey,
+        'PBFPubKey': keys.public,
         'client': _encryption.encrypt(payload.toMap()),
         'alg': Encryption.ALGORITHM,
       },

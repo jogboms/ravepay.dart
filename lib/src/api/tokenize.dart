@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:ravepay/src/api/api.dart';
 import 'package:ravepay/src/constants/endpoints.dart';
-import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/log.dart';
 import 'package:ravepay/src/utils/response.dart';
 
@@ -27,8 +26,8 @@ class Tokenize extends Api {
     assert(iP != null);
     assert(txRef != null);
 
-    final payload = <String, dynamic>{
-      'SECKEY': Ravepay().secretKey,
+    final payload = {
+      'SECKEY': keys.secret,
       'token': token,
       'currency': currency,
       'country': country,

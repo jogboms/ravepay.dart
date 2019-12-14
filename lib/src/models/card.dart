@@ -14,12 +14,18 @@ abstract class Card with ModelInterface implements Built<Card, CardBuilder> {
   factory Card([void Function(CardBuilder b) updates]) = _$Card;
 
   String get expirymonth;
+
   String get expiryyear;
+
   String get cardBIN;
+
   String get last4digits;
+
   String get brand;
+
   @BuiltValueField(wireName: 'card_tokens')
   BuiltList<CardTokens> get cardTokens;
+
   @BuiltValueField(wireName: 'life_time_token')
   String get lifeTimeToken;
 

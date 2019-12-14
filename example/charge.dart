@@ -2,7 +2,6 @@ import 'package:ravepay/ravepay.dart';
 
 import '_bootstrap.dart';
 
-// TODO
 Future<Response<Result>> card() async {
   final charge = Charge.card(
     amount: '2000',
@@ -19,24 +18,18 @@ Future<Response<Result>> card() async {
   return await charge.charge();
 }
 
-// TODO
 Future<Response<Result>> pin() async {
   final charge = Charge.pin(
-    cardno: '5399415100081601',
-//    cardno: '5399838383838381',
-    cvv: '658',
-//    cvv: '470',
+    cardno: '5399838383838381',
+    cvv: '470',
     expirymonth: '10',
-    expiryyear: '21',
-//    expiryyear: '22',
-    amount: '550',
-//    amount: '12345',
+    expiryyear: '22',
+    amount: '12345',
     email: 'jeremiahogbomo@gmail.com',
     firstname: 'Jeremiah',
     lastname: 'Ogbomo',
     txRef: 'LM5GVOUW3TYF',
     pin: '1234',
-//    pin: '1236',
     meta: [
       Metadata.named(name: 'hello', value: 'world'),
     ],
