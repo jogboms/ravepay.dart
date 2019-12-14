@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 
@@ -22,7 +22,7 @@ class Disburse {
     return _http.post(
       Endpoints.disburse,
       <String, dynamic>{
-        'seckey': Rave().secretKey,
+        'seckey': Ravepay().secretKey,
         'bank_code': bankCode,
         'account_number': accountNumber,
         'currency': currency,

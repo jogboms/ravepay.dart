@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 
@@ -17,7 +17,7 @@ class Transactions {
     return _http.post(
       Endpoints.verifyTransaction,
       <String, dynamic>{
-        'SECKEY': Rave().secretKey,
+        'SECKEY': Ravepay().secretKey,
         'flwref': flwRef,
         'txref': txRef,
       },
@@ -35,7 +35,7 @@ class Transactions {
     return _http.post(
       Endpoints.requeryTransaction,
       <String, dynamic>{
-        'SECKEY': Rave().secretKey,
+        'SECKEY': Ravepay().secretKey,
         'flwref': flwRef,
         'txref': txRef,
         'last_attempt': lastAttempt,

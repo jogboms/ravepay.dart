@@ -1,5 +1,6 @@
 # Files and directories created by pub
 .packages
+.history/
 .pub/
 .dart_tool/
 build/
@@ -7,6 +8,7 @@ packages
 pubspec.lock
 test/.test_coverage.dart
 coverage/
+coverage_badge.svg
 
 # Directory created by dartdoc
 doc/api/

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:ravepay/src/constants/strings.dart';
 import 'package:ravepay/src/models/main.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/log.dart';
 
 typedef T TransformFunction<T>(dynamic data, String status);
@@ -63,7 +63,7 @@ class Response<T> extends Model {
               responseJson.containsKey("message") &&
               responseJson["message"] != null
           ? responseJson["message"]
-          : !Rave().production ? _response.reasonPhrase : Strings.errorMessage;
+          : !Ravepay().production ? _response.reasonPhrase : Strings.errorMessage;
 
       if (_response.statusCode >= 300) {
         throw ResponseException(_response.statusCode, status, message);
@@ -83,7 +83,7 @@ class Response<T> extends Model {
       Log().error('ResponseException', e);
     } catch (e) {
       status = "UNKNOWN";
-      message = _response.statusCode == 502 && Rave().production
+      message = _response.statusCode == 502 && Ravepay().production
           ? Strings.errorMessage
           : e.toString();
       rawData = null;

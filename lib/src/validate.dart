@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 
@@ -17,7 +17,7 @@ class Validate {
     return _http.post(
       Endpoints.validateCardCharge,
       <String, dynamic>{
-        'PBFPubKey': Rave().publicKey,
+        'PBFPubKey': Ravepay().publicKey,
         'transaction_reference': flwRef,
         'otp': otp,
       },
@@ -31,7 +31,7 @@ class Validate {
     return _http.post(
       Endpoints.validateAccountCharge,
       <String, dynamic>{
-        'PBFPubKey': Rave().publicKey,
+        'PBFPubKey': Ravepay().publicKey,
         'transactionreference': flwRef,
         'otp': otp,
       },

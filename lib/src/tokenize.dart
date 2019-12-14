@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:ravepay/src/rave.dart';
+import 'package:ravepay/src/ravepay.dart';
 import 'package:ravepay/src/utils/endpoints.dart';
 import 'package:ravepay/src/utils/http_wrapper.dart';
 
@@ -31,7 +31,7 @@ class Tokenize {
     return _http.post(
       url,
       <String, dynamic>{
-        'SECKEY': Rave().secretKey,
+        'SECKEY': Ravepay().secretKey,
         'token': token,
         'currency': currency,
         'country': country,

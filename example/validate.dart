@@ -1,6 +1,6 @@
 import 'package:ravepay/ravepay.dart';
 
-import '../test/_constants.dart';
+import '_keys.dart';
 import 'charge.dart' as charge;
 
 void card() async {
@@ -20,7 +20,7 @@ void account() async {
 }
 
 void main() async {
-  Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
+  Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
 
   card();
 }

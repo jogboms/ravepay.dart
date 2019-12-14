@@ -1,15 +1,15 @@
 import 'package:ravepay/ravepay.dart';
 
-import '../test/_constants.dart';
+import '_keys.dart';
 
 // TODO
-void card() async {
+Future<Response<Result>> card() async {
   final charge = Charge.card(
     amount: '2000',
-    cardno: '5438898014560229',
-    cvv: '890',
+    cardno: '4556052704172643',
+    cvv: '899',
     email: 'jeremiahogbomo@gmail.com',
-    expirymonth: '12',
+    expirymonth: '08',
     expiryyear: '21',
     firstname: "Jeremiah",
     lastname: "Ogbomo",
@@ -17,11 +17,11 @@ void card() async {
     redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
   );
 
-  await charge.charge();
+  return await charge.charge();
 }
 
 // TODO
-void pin() async {
+Future<Response<Result>> pin() async {
   final charge = Charge.pin(
     cardno: '5438898014560229',
     cvv: '789',
@@ -35,10 +35,10 @@ void pin() async {
     redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
   );
 
-  await charge.charge();
+  return await charge.charge();
 }
 
-void account() async {
+Future<Response<Result>> account() async {
   final _banks = await Banks().fetch();
   final banks = _banks.data;
 
@@ -54,10 +54,10 @@ void account() async {
     redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
   );
 
-  await charge.charge();
+  return await charge.charge();
 }
 
-void ussd() async {
+Future<Response<Result>> ussd() async {
   final _banks = await Banks().fetch();
   final banks = _banks.data;
 
@@ -74,14 +74,14 @@ void ussd() async {
     redirectUrl: "https://rave-web.herokuapp.com/receivepayment",
   );
 
-  await charge.charge();
+  return await charge.charge();
 }
 
 void main() async {
-  Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
+  Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
 
-  card();
-  pin();
-  account();
-  ussd();
+  await card();
+  await pin();
+  await account();
+  await ussd();
 }

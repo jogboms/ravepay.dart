@@ -1,6 +1,6 @@
 import 'package:ravepay/ravepay.dart';
 
-import '../test/_constants.dart';
+import '_keys.dart';
 
 void preauth() async {
   await PreAuth().preauth(
@@ -52,7 +52,7 @@ void refundCard() async {
 }
 
 void main() async {
-  Rave.init(production: false, publicKey: PUBK, secretKey: SECK);
+  Ravepay.init(production: false, publicKey: PUBK, secretKey: SECK);
 
   // preauth();
   voidCard();
